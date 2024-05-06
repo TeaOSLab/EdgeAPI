@@ -264,7 +264,7 @@ func (this *IPListDAO) CountAllEnabledIPLists(tx *dbs.Tx, listType string, isPub
 		Attr("type", listType).
 		Attr("isPublic", isPublic)
 	if len(keyword) > 0 {
-		query.Where("(name LIKE :keyword OR description LIKE :keyword)").
+		query.Where("(name LIKE :keyword OR description LIKE :keyword OR code LIKE :keyword)").
 			Param("keyword", dbutils.QuoteLike(keyword))
 	}
 	return query.Count()
@@ -277,7 +277,7 @@ func (this *IPListDAO) ListEnabledIPLists(tx *dbs.Tx, listType string, isPublic 
 		Attr("type", listType).
 		Attr("isPublic", isPublic)
 	if len(keyword) > 0 {
-		query.Where("(name LIKE :keyword OR description LIKE :keyword)").
+		query.Where("(name LIKE :keyword OR description LIKE :keyword OR code LIKE :keyword)").
 			Param("keyword", dbutils.QuoteLike(keyword))
 	}
 	_, err = query.Offset(offset).
