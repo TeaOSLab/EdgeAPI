@@ -293,7 +293,11 @@ func (this *UserService) CheckUserUsername(ctx context.Context, req *pb.CheckUse
 func (this *UserService) LoginUser(ctx context.Context, req *pb.LoginUserRequest) (*pb.LoginUserResponse, error) {
 	_, err := this.ValidateUserNode(ctx, false)
 	if err != nil {
-		return nil, err
+		// 允许管理员调用此接口
+		_, err = this.ValidateAdmin(ctx)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	if !teaconst.IsPlus {
