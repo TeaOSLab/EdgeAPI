@@ -9,9 +9,7 @@ import (
 	"github.com/TeaOSLab/EdgeCommon/pkg/serverconfigs"
 	"github.com/iwind/TeaGo/Tea"
 	"github.com/iwind/TeaGo/cmd"
-	"github.com/iwind/TeaGo/dbs"
 	"github.com/iwind/TeaGo/types"
-	"gopkg.in/yaml.v3"
 	"os"
 	"strconv"
 	"strings"
@@ -87,12 +85,7 @@ func (this *Setup) Run() error {
 	}
 
 	// 执行SQL
-	var config = &dbs.Config{}
-	configData, err := os.ReadFile(Tea.ConfigFile("db.yaml"))
-	if err != nil {
-		return err
-	}
-	err = yaml.Unmarshal(configData, config)
+	config, err := configs.LoadDBConfig()
 	if err != nil {
 		return err
 	}
@@ -144,7 +137,7 @@ func (this *Setup) Run() error {
 		return err
 	}
 	if apiNodeId == 0 {
-		addr := &serverconfigs.NetworkAddressConfig{
+		var addr = &serverconfigs.NetworkAddressConfig{
 			Protocol:  serverconfigs.Protocol(this.config.APINodeProtocol),
 			Host:      this.config.APINodeHost,
 			PortRange: strconv.Itoa(this.config.APINodePort),
@@ -172,7 +165,7 @@ func (this *Setup) Run() error {
 		}
 		if this.config.APINodeProtocol == "https" {
 			// TODO 如果在安装过程中开启了HTTPS，需要同时上传SSL证书
-			httpsConfig := &serverconfigs.HTTPSProtocolConfig{}
+			var httpsConfig = &serverconfigs.HTTPSProtocolConfig{}
 			httpsConfig.IsOn = true
 			httpsConfig.Listen = []*serverconfigs.NetworkAddressConfig{
 				{

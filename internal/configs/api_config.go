@@ -28,56 +28,63 @@ func SharedAPIConfig() (*APIConfig, error) {
 	}
 
 	// 候选文件
-	localFile := Tea.ConfigFile("api.yaml")
-	isFromLocal := false
-	paths := []string{localFile}
-	homeDir, homeErr := os.UserHomeDir()
-	if homeErr == nil {
-		paths = append(paths, homeDir+"/."+teaconst.ProcessName+"/api.yaml")
-	}
-	paths = append(paths, "/etc/"+teaconst.ProcessName+"/api.yaml")
-
-	// 依次检查文件
-	var data []byte
-	var err error
-	for _, path := range paths {
-		data, err = os.ReadFile(path)
-		if err == nil {
-			if path == localFile {
-				isFromLocal = true
-			}
-			break
+	var config = &APIConfig{}
+	{
+		var localFile = Tea.ConfigFile("api.yaml")
+		var isFromLocal = false
+		var paths = []string{localFile}
+		homeDir, homeErr := os.UserHomeDir()
+		if homeErr == nil {
+			paths = append(paths, homeDir+"/."+teaconst.ProcessName+"/api.yaml")
 		}
-	}
-	if err != nil {
-		return nil, err
-	}
+		paths = append(paths, "/etc/"+teaconst.ProcessName+"/api.yaml")
 
-	// 解析内容
-	config := &APIConfig{}
-	err = yaml.Unmarshal(data, config)
-	if err != nil {
-		return nil, err
-	}
+		// 依次检查文件
+		var data []byte
+		var err error
+		var firstErr error
+		for _, path := range paths {
+			data, err = os.ReadFile(path)
+			if err != nil {
+				if firstErr == nil {
+					firstErr = err
+				}
+			} else {
+				if path == localFile {
+					isFromLocal = true
+				}
+				break
+			}
+		}
+		if firstErr != nil {
+			return nil, firstErr
+		}
 
-	if !isFromLocal {
-		// 恢复文件
-		_ = os.WriteFile(localFile, data, 0666)
+		// 解析内容
+		err = yaml.Unmarshal(data, config)
+		if err != nil {
+			return nil, err
+		}
+
+		if !isFromLocal {
+			// 恢复文件
+			_ = os.WriteFile(localFile, data, 0666)
+		}
 	}
 
 	// 恢复数据库文件
 	{
-		dbConfigFile := Tea.ConfigFile("db.yaml")
+		var dbConfigFile = Tea.ConfigFile("db.yaml")
 		_, err := os.Stat(dbConfigFile)
 		if err != nil {
-			paths := []string{}
+			var paths = []string{}
 			homeDir, homeErr := os.UserHomeDir()
 			if homeErr == nil {
 				paths = append(paths, homeDir+"/."+teaconst.ProcessName+"/db.yaml")
 			}
 			paths = append(paths, "/etc/"+teaconst.ProcessName+"/db.yaml")
 			for _, path := range paths {
-				_, err := os.Stat(path)
+				_, err = os.Stat(path)
 				if err == nil {
 					data, err := os.ReadFile(path)
 					if err == nil {
@@ -112,9 +119,9 @@ func (this *APIConfig) WriteFile(path string) error {
 	}
 
 	// 生成备份文件
-	filename := filepath.Base(path)
+	var filename = filepath.Base(path)
 	homeDir, _ := os.UserHomeDir()
-	backupDirs := []string{"/etc/edge-api"}
+	var backupDirs = []string{"/etc/edge-api"}
 	if len(homeDir) > 0 {
 		backupDirs = append(backupDirs, homeDir+"/.edge-api")
 	}
@@ -135,7 +142,7 @@ func (this *APIConfig) WriteFile(path string) error {
 
 // ResetAPIConfig 重置配置
 func ResetAPIConfig() error {
-	for _, filename := range []string{"api.yaml", "db.yaml"} {
+	for _, filename := range []string{"api.yaml", "db.yaml", ".db.yaml"} {
 		// 重置 configs/api.yaml
 		{
 			var configFile = Tea.ConfigFile(filename)

@@ -1,16 +1,4 @@
-default:
-  db: "prod"
-  prefix: ""
-
-dbs:
-  prod:
-    driver: "mysql"
-    dsn: "root:123456@tcp(127.0.0.1:3306)/db_edge?charset=utf8mb4&timeout=30s"
-    prefix: "edge"
-    models:
-      package: internal/web/models
-
-
-fields:
-  bool: [ "uamIsOn", "followPort", "requestHostExcludingPort", "autoRemoteStart", "autoInstallNftables", "enableIPLists", "detectAgents", "checkingPorts", "enableRecordHealthCheck", "offlineIsNotified", "http2Enabled", "http3Enabled", "enableHTTP2", "retry50X", "retry40X", "autoSystemTuning", "disableDefaultDB", "autoTrimDisks","enableGlobalPages" ]
-
+user: root
+password: 123456
+host: 127.0.0.1:3306
+database: db_edge

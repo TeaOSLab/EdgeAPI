@@ -29,7 +29,6 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/status"
-	"gopkg.in/yaml.v3"
 	"log"
 	"net"
 	"os"
@@ -300,6 +299,22 @@ func (this *APINode) listenRPC(listener net.Listener, tlsConfig *tls.Config) err
 func (this *APINode) checkDB() error {
 	logs.Println("[API_NODE]checking database connection ...")
 
+	// generate .db.yaml
+	{
+		data, err := os.ReadFile(Tea.ConfigFile("db.yaml"))
+		if err != nil {
+			return errors.New("could not find database config file 'db.yaml' (at " + Tea.ConfigFile("db.yaml") + ")")
+		}
+
+		simpleConfig, err := configs.ParseSimpleDBConfig(data)
+		if err == nil && len(simpleConfig.Host) > 0 {
+			err = simpleConfig.GenerateOldConfig()
+			if err != nil {
+				return err
+			}
+		}
+	}
+
 	// lookup mysqld_safe process
 	go dbutils.FindMySQLPathAndRemember()
 
@@ -356,12 +371,7 @@ func (this *APINode) autoUpgrade() error {
 	}
 
 	// 执行SQL
-	var config = &dbs.Config{}
-	configData, err := os.ReadFile(Tea.ConfigFile("db.yaml"))
-	if err != nil {
-		return fmt.Errorf("read database config file failed: %w", err)
-	}
-	err = yaml.Unmarshal(configData, config)
+	config, err := configs.LoadDBConfig()
 	if err != nil {
 		return fmt.Errorf("decode database config failed: %w", err)
 	}
