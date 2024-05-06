@@ -4,6 +4,7 @@ import (
 	"crypto/rand"
 	"encoding/json"
 	"fmt"
+	"github.com/TeaOSLab/EdgeAPI/internal/configs"
 	"github.com/TeaOSLab/EdgeAPI/internal/db/models"
 	"github.com/TeaOSLab/EdgeCommon/pkg/dnsconfigs"
 	"github.com/TeaOSLab/EdgeCommon/pkg/serverconfigs"
@@ -14,9 +15,7 @@ import (
 	"github.com/iwind/TeaGo/rands"
 	"github.com/iwind/TeaGo/types"
 	stringutil "github.com/iwind/TeaGo/utils/string"
-	"gopkg.in/yaml.v3"
 	"io"
-	"os"
 	"time"
 )
 
@@ -34,12 +33,7 @@ func NewSQLExecutor(dbConfig *dbs.DBConfig) *SQLExecutor {
 
 func NewSQLExecutorFromCmd() (*SQLExecutor, error) {
 	// 执行SQL
-	var config = &dbs.Config{}
-	configData, err := os.ReadFile(Tea.ConfigFile("db.yaml"))
-	if err != nil {
-		return nil, err
-	}
-	err = yaml.Unmarshal(configData, config)
+	config, err := configs.LoadDBConfig()
 	if err != nil {
 		return nil, err
 	}
@@ -320,6 +314,9 @@ func (this *SQLExecutor) checkCluster(db *dbs.DB) error {
 
 	models.SharedNodeClusterDAO = models.NewNodeClusterDAO()
 	models.SharedNodeClusterDAO.Instance = db
+
+	models.SharedIPListDAO = models.NewIPListDAO()
+	models.SharedIPListDAO.Instance = db
 
 	policyId, err = models.SharedHTTPFirewallPolicyDAO.CreateDefaultFirewallPolicy(nil, "默认集群")
 	if err != nil {
