@@ -174,8 +174,9 @@ func (this *HTTPCachePolicyDAO) CreateDefaultCachePolicy(tx *dbs.Tx, name string
 	}
 
 	var storageOptions = &serverconfigs.HTTPFileCacheStorage{
-		Dir:        "/opt/cache",
-		EnableMMAP: false,
+		Dir:                            "/opt/cache",
+		EnableMMAP:                     false,
+		EnableIncompletePartialContent: true,
 		MemoryPolicy: &serverconfigs.HTTPCachePolicy{
 			Capacity: &shared.SizeCapacity{
 				Count: 1,
