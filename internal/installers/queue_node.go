@@ -313,6 +313,9 @@ func (this *NodeQueue) StartNode(nodeId int64) error {
 	if err != nil {
 		return errors.New("edge node was not installed correctly, can not find executable file")
 	}
+	if len(exe) == 0 {
+		return errors.New("edge node was not installed correctly, can not find executable file")
+	}
 
 	// 我们先尝试Systemd启动
 	_, _, _ = installer.client.Exec("systemctl start edge-node")
@@ -420,6 +423,9 @@ func (this *NodeQueue) StopNode(nodeId int64) error {
 	if err != nil {
 		return errors.New("edge node was not installed correctly, can not find executable file")
 	}
+	if len(exe) == 0 {
+		return errors.New("edge node was not installed correctly, can not find executable file")
+	}
 
 	// 我们先尝试Systemd停止
 	_, _, _ = installer.client.Exec("/usr/bin/systemctl stop edge-node")
@@ -431,6 +437,113 @@ func (this *NodeQueue) StopNode(nodeId int64) error {
 	}
 	if len(stderr) > 0 {
 		return errors.New("stop failed: " + stderr)
+	}
+
+	return nil
+}
+
+// UninstallNode 卸载节点
+func (this *NodeQueue) UninstallNode(nodeId int64) error {
+	node, err := models.SharedNodeDAO.FindEnabledNode(nil, nodeId)
+	if err != nil {
+		return err
+	}
+	if node == nil {
+		return errors.New("can not find node, ID：'" + numberutils.FormatInt64(nodeId) + "'")
+	}
+
+	// 登录信息
+	login, err := models.SharedNodeLoginDAO.FindEnabledNodeLoginWithNodeId(nil, nodeconfigs.NodeRoleNode, nodeId)
+	if err != nil {
+		return err
+	}
+	if login == nil {
+		return errors.New("can not find node login information")
+	}
+	loginParams, err := login.DecodeSSHParams()
+	if err != nil {
+		return err
+	}
+
+	if len(loginParams.Host) == 0 {
+		// 查询节点IP
+		ip, _, err := models.SharedNodeIPAddressDAO.FindFirstNodeAccessIPAddress(nil, nodeId, false, nodeconfigs.NodeRoleNode)
+		if err != nil {
+			return err
+		}
+		if len(ip) > 0 {
+			loginParams.Host = ip
+		} else {
+			return errors.New("ssh host should not be empty")
+		}
+	}
+
+	if loginParams.Port <= 0 {
+		// 从集群中读取
+		sshParams, err := models.SharedNodeClusterDAO.FindClusterSSHParams(nil, int64(node.ClusterId))
+		if err != nil {
+			return err
+		}
+		if sshParams != nil && sshParams.Port > 0 {
+			loginParams.Port = sshParams.Port
+		} else {
+			return errors.New("ssh port is invalid")
+		}
+	}
+
+	if loginParams.GrantId == 0 {
+		// 从集群中读取
+		grantId, err := models.SharedNodeClusterDAO.FindClusterGrantId(nil, int64(node.ClusterId))
+		if err != nil {
+			return err
+		}
+		if grantId == 0 {
+			return errors.New("can not find node grant")
+		}
+		loginParams.GrantId = grantId
+	}
+	grant, err := models.SharedNodeGrantDAO.FindEnabledNodeGrant(nil, loginParams.GrantId)
+	if err != nil {
+		return err
+	}
+	if grant == nil {
+		return errors.New("can not find user grant with id '" + numberutils.FormatInt64(loginParams.GrantId) + "'")
+	}
+
+	var installer = &NodeInstaller{}
+	err = installer.Login(&Credentials{
+		Host:       loginParams.Host,
+		Port:       loginParams.Port,
+		Username:   grant.Username,
+		Password:   grant.Password,
+		PrivateKey: grant.PrivateKey,
+		Passphrase: grant.Passphrase,
+		Method:     grant.Method,
+		Sudo:       grant.Su == 1,
+	})
+	if err != nil {
+		return err
+	}
+	defer func() {
+		_ = installer.Close()
+	}()
+
+	// 检查命令是否存在
+	exe, err := this.lookupNodeExe(node, installer.client)
+	if err != nil {
+		return errors.New("edge node was not installed correctly, can not find executable file")
+	}
+	if len(exe) == 0 {
+		return errors.New("edge node was not installed correctly, can not find executable file")
+	}
+
+	// 执行uninstall
+	_, stderr, err := installer.client.Exec(exe + " uninstall")
+	if err != nil {
+		return fmt.Errorf("uninstall failed: %w", err)
+	}
+	if len(stderr) > 0 {
+		return errors.New("uninstall failed: " + stderr)
 	}
 
 	return nil

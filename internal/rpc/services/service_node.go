@@ -967,6 +967,31 @@ func (this *NodeService) StopNode(ctx context.Context, req *pb.StopNodeRequest) 
 	return &pb.StopNodeResponse{IsOk: true}, nil
 }
 
+// UninstallNode 卸载节点
+func (this *NodeService) UninstallNode(ctx context.Context, req *pb.UninstallNodeRequest) (*pb.UninstallNodeResponse, error) {
+	_, err := this.ValidateAdmin(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	err = installers.SharedNodeQueue().UninstallNode(req.NodeId)
+	if err != nil {
+		return &pb.UninstallNodeResponse{
+			IsOk:  false,
+			Error: err.Error(),
+		}, nil
+	}
+
+	// 修改为未安装
+	var tx = this.NullTx()
+	err = models.SharedNodeDAO.UpdateNodeIsInstalled(tx, req.NodeId, false)
+	if err != nil {
+		return nil, err
+	}
+
+	return &pb.UninstallNodeResponse{IsOk: true}, nil
+}
+
 // UpdateNodeConnectedAPINodes 更改节点连接的API节点信息
 func (this *NodeService) UpdateNodeConnectedAPINodes(ctx context.Context, req *pb.UpdateNodeConnectedAPINodesRequest) (*pb.RPCSuccess, error) {
 	// 校验节点
