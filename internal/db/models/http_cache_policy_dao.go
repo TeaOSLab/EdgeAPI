@@ -165,9 +165,6 @@ func (this *HTTPCachePolicyDAO) CreateDefaultCachePolicy(tx *dbs.Tx, name string
 		Count: 256,
 		Unit:  shared.SizeCapacityUnitMB,
 	}
-	if err != nil {
-		return 0, err
-	}
 	maxSizeJSON, err := maxSize.AsJSON()
 	if err != nil {
 		return 0, err
