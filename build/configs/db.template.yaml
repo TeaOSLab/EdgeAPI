@@ -2,3 +2,4 @@ user: root
 password: 123456
 host: 127.0.0.1:3306
 database: db_edge
+boolFields: [ "uamIsOn", "followPort", "requestHostExcludingPort", "autoRemoteStart", "autoInstallNftables", "enableIPLists", "detectAgents", "checkingPorts", "enableRecordHealthCheck", "offlineIsNotified", "http2Enabled", "http3Enabled", "enableHTTP2", "retry50X", "retry40X", "autoSystemTuning", "disableDefaultDB", "autoTrimDisks", "enableGlobalPages", "ignoreLocal", "ignoreSearchEngine" ]
