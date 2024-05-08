@@ -137,6 +137,7 @@ func (this *APINode) Start() {
 	// 数据库通知启动
 	this.setProgress("DATABASE", "正在建立数据库模型")
 	logs.Println("[API_NODE]notify ready ...")
+	this.processTableNames()
 	dbs.NotifyReady()
 
 	// 设置时区
@@ -465,6 +466,35 @@ func (this *APINode) setupDB() error {
 	_ = dbutils.SetGlobalVarMin(db, "thread_cache_size", 32)
 
 	return nil
+}
+
+// 处理表名兼容
+func (this *APINode) processTableNames() {
+	dbs.OnDAOInitError(func(dao dbs.DAOInterface, err error) error {
+		if err == nil {
+			return nil
+		}
+
+		if errors.Is(err, dbs.ErrTableNotFound) {
+			var instance = dao.Object().Instance
+			if instance == nil {
+				return err
+			}
+
+			// 查找完全小写的
+			var lowerTableName = strings.ToLower(dao.Object().Table)
+			lowerTable, _ := instance.FindTable(lowerTableName)
+			if lowerTable != nil {
+				_, err = instance.Exec("RENAME TABLE `" + lowerTableName + "` TO `" + dao.Object().Table + "`")
+				if err == nil {
+					logs.Println("[API_NODE]rename table '" + lowerTableName + "' to '" + dao.Object().Table + "'")
+					return dao.Object().Init()
+				}
+			}
+		}
+
+		return err
+	})
 }
 
 // 启动端口
