@@ -415,7 +415,8 @@ func (this *SQLDump) applyQueue(db *dbs.DB, newResult *SQLDumpResult, showLog bo
 			if one == nil {
 				ops = append(ops, "+ record "+newTable.Name+" "+strings.Join(valueStrings, ", "))
 				if showLog {
-					this.log("+ record " + newTable.Name + " " + strings.Join(valueStrings, ", "))
+					// 不记录详细日志，防止小白用户误解日志内容
+					// this.log("+ record " + newTable.Name + " " + strings.Join(valueStrings, ", "))
 				}
 				var params = []string{}
 				var args = []string{}
@@ -439,7 +440,8 @@ func (this *SQLDump) applyQueue(db *dbs.DB, newResult *SQLDumpResult, showLog bo
 			} else if !record.ValuesEquals(one) {
 				ops = append(ops, "* record "+newTable.Name+" "+strings.Join(valueStrings, ", "))
 				if showLog {
-					this.log("* record " + newTable.Name + " " + strings.Join(valueStrings, ", "))
+					// 不记录详细日志，防止小白用户误解日志内容
+					// this.log("* record " + newTable.Name + " " + strings.Join(valueStrings, ", "))
 				}
 				var args = []string{}
 				var values = []any{}
