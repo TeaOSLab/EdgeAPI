@@ -10,6 +10,7 @@ import (
 	"os"
 	"strings"
 	"sync"
+	"time"
 )
 
 type DNSProvider struct {
@@ -76,6 +77,10 @@ func (this *DNSProvider) Present(domain, token, keyAuth string) error {
 	}
 
 	return nil
+}
+
+func (this *DNSProvider) Timeout() (timeout, interval time.Duration) {
+	return 2 * time.Minute, 2 * time.Second
 }
 
 func (this *DNSProvider) CleanUp(domain, token, keyAuth string) error {
