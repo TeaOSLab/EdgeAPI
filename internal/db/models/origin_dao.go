@@ -540,9 +540,25 @@ func (this *OriginDAO) ComposeOriginConfig(tx *dbs.Tx, originId int64, dataMap *
 
 // CheckUserOrigin 检查源站权限
 func (this *OriginDAO) CheckUserOrigin(tx *dbs.Tx, userId int64, originId int64) error {
-	reverseProxyId, err := SharedReverseProxyDAO.FindReverseProxyContainsOriginId(tx, originId)
+	if originId <= 0 {
+		return ErrNotFound
+	}
+
+	// 快速查找
+	reverseProxyId, err := this.Query(tx).
+		Pk(originId).
+		Result(OriginField_ReverseProxyId).
+		FindInt64Col(0)
 	if err != nil {
 		return err
+	}
+
+	// 再次查找
+	if reverseProxyId <= 0 {
+		reverseProxyId, err = SharedReverseProxyDAO.FindReverseProxyContainsOriginId(tx, originId)
+		if err != nil {
+			return err
+		}
 	}
 	if reverseProxyId == 0 {
 		// 这里我们不允许源站没有被使用
@@ -560,6 +576,18 @@ func (this *OriginDAO) ExistsOrigin(tx *dbs.Tx, originId int64) (bool, error) {
 		Pk(originId).
 		State(OriginStateEnabled).
 		Exist()
+}
+
+// UpdateOriginReverseProxyId 设置源站所属反向代理ID
+func (this *OriginDAO) UpdateOriginReverseProxyId(tx *dbs.Tx, originId int64, reverseProxyId int64) error {
+	if originId <= 0 || reverseProxyId <= 0 {
+		return nil
+	}
+
+	return this.Query(tx).
+		Pk(originId).
+		Set(OriginField_ReverseProxyId, reverseProxyId).
+		UpdateQuickly()
 }
 
 // NotifyUpdate 通知更新
