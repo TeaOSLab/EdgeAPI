@@ -818,8 +818,15 @@ func (this *ServerDAO) CountAllEnabledServersMatch(tx *dbs.Tx, groupId int64, ke
 				Param("serverId", keyword).
 				Param("keyword", dbutils.QuoteLike(keyword))
 		} else {
-			query.Where("(name LIKE :keyword OR serverNames LIKE :keyword)").
-				Param("keyword", dbutils.QuoteLike(keyword))
+			if regexp.MustCompile(`^[a-z0-9.-]+$`).MatchString(keyword) {
+				// 可以搜索源站
+				query.Where("(name LIKE :keyword OR serverNames LIKE :keyword OR JSON_EXTRACT(reverseProxy, '$.reverseProxyId') IN (SELECT reverseProxyId FROM " + SharedOriginDAO.Table + " WHERE reverseProxyId > 0 AND JSON_EXTRACT(addr, '$.host')=:fullKeyword))")
+				query.Param("keyword", dbutils.QuoteLike(keyword))
+				query.Param("fullKeyword", keyword)
+			} else {
+				query.Where("(name LIKE :keyword OR serverNames LIKE :keyword)").
+					Param("keyword", dbutils.QuoteLike(keyword))
+			}
 		}
 	}
 	if userId > 0 {
@@ -861,7 +868,7 @@ func (this *ServerDAO) CountAllEnabledServersMatch(tx *dbs.Tx, groupId int64, ke
 //
 //	groupId 分组ID，如果为-1，则搜索没有分组的服务
 func (this *ServerDAO) ListEnabledServersMatch(tx *dbs.Tx, offset int64, size int64, groupId int64, keyword string, userId int64, clusterId int64, auditingFlag int32, protocolFamilies []string, order string) (result []*Server, err error) {
-	query := this.Query(tx).
+	var query = this.Query(tx).
 		State(ServerStateEnabled).
 		Offset(offset).
 		Limit(size).
@@ -880,8 +887,15 @@ func (this *ServerDAO) ListEnabledServersMatch(tx *dbs.Tx, offset int64, size in
 				Param("serverId", keyword).
 				Param("keyword", dbutils.QuoteLike(keyword))
 		} else {
-			query.Where("(name LIKE :keyword OR serverNames LIKE :keyword)").
-				Param("keyword", dbutils.QuoteLike(keyword))
+			if regexp.MustCompile(`^[a-z0-9.-]+$`).MatchString(keyword) {
+				// 可以搜索源站
+				query.Where("(name LIKE :keyword OR serverNames LIKE :keyword OR JSON_EXTRACT(reverseProxy, '$.reverseProxyId') IN (SELECT reverseProxyId FROM " + SharedOriginDAO.Table + " WHERE reverseProxyId > 0 AND JSON_EXTRACT(addr, '$.host')=:fullKeyword))")
+				query.Param("keyword", dbutils.QuoteLike(keyword))
+				query.Param("fullKeyword", keyword)
+			} else {
+				query.Where("(name LIKE :keyword OR serverNames LIKE :keyword)").
+					Param("keyword", dbutils.QuoteLike(keyword))
+			}
 		}
 	}
 	if userId > 0 {
