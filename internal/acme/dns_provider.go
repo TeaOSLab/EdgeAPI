@@ -29,7 +29,10 @@ func NewDNSProvider(raw dnsclients.ProviderInterface, dnsDomain string) *DNSProv
 
 func (this *DNSProvider) Present(domain, token, keyAuth string) error {
 	_ = os.Setenv("LEGO_DISABLE_CNAME_SUPPORT", "true")
-	fqdn, value := dns01.GetRecord(domain, keyAuth)
+	var info = dns01.GetChallengeInfo(domain, keyAuth)
+
+	var fqdn = info.EffectiveFQDN
+	var value = info.Value
 
 	// 设置记录
 	var index = strings.Index(fqdn, "."+this.dnsDomain)
@@ -66,6 +69,7 @@ func (this *DNSProvider) Present(domain, token, keyAuth string) error {
 		Type:  dnstypes.RecordTypeTXT,
 		Value: value,
 		Route: this.raw.DefaultRoute(),
+		TTL:   this.raw.MinTTL(),
 	})
 	if err != nil {
 		return fmt.Errorf("create DNS record failed: %w", err)

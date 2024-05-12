@@ -67,7 +67,7 @@ func (this *DNSProviderDAO) FindEnabledDNSProvider(tx *dbs.Tx, id int64) (*DNSPr
 }
 
 // CreateDNSProvider 创建服务商
-func (this *DNSProviderDAO) CreateDNSProvider(tx *dbs.Tx, adminId int64, userId int64, providerType string, name string, apiParamsJSON []byte) (int64, error) {
+func (this *DNSProviderDAO) CreateDNSProvider(tx *dbs.Tx, adminId int64, userId int64, providerType string, name string, apiParamsJSON []byte, minTTL int32) (int64, error) {
 	var op = NewDNSProviderOperator()
 	op.AdminId = adminId
 	op.UserId = userId
@@ -76,6 +76,11 @@ func (this *DNSProviderDAO) CreateDNSProvider(tx *dbs.Tx, adminId int64, userId 
 	if len(apiParamsJSON) > 0 {
 		op.ApiParams = apiParamsJSON
 	}
+
+	if minTTL >= 0 {
+		op.MinTTL = minTTL
+	}
+
 	op.State = DNSProviderStateEnabled
 	err := this.Save(tx, op)
 	if err != nil {
@@ -85,7 +90,7 @@ func (this *DNSProviderDAO) CreateDNSProvider(tx *dbs.Tx, adminId int64, userId 
 }
 
 // UpdateDNSProvider 修改服务商
-func (this *DNSProviderDAO) UpdateDNSProvider(tx *dbs.Tx, dnsProviderId int64, name string, apiParamsJSON []byte) error {
+func (this *DNSProviderDAO) UpdateDNSProvider(tx *dbs.Tx, dnsProviderId int64, name string, apiParamsJSON []byte, minTTL int32) error {
 	if dnsProviderId <= 0 {
 		return errors.New("invalid dnsProviderId")
 	}
@@ -97,6 +102,10 @@ func (this *DNSProviderDAO) UpdateDNSProvider(tx *dbs.Tx, dnsProviderId int64, n
 	// 如果留空则表示不修改
 	if len(apiParamsJSON) > 0 {
 		op.ApiParams = apiParamsJSON
+	}
+
+	if minTTL >= 0 {
+		op.MinTTL = minTTL
 	}
 
 	err := this.Save(tx, op)
