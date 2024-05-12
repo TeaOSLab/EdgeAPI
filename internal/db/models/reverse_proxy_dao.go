@@ -3,6 +3,7 @@ package models
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"github.com/TeaOSLab/EdgeAPI/internal/utils"
 	"github.com/TeaOSLab/EdgeCommon/pkg/serverconfigs"
 	"github.com/TeaOSLab/EdgeCommon/pkg/serverconfigs/shared"
@@ -213,7 +214,24 @@ func (this *ReverseProxyDAO) ComposeReverseProxyConfig(tx *dbs.Tx, reverseProxyI
 }
 
 // CreateReverseProxy 创建反向代理
-func (this *ReverseProxyDAO) CreateReverseProxy(tx *dbs.Tx, adminId int64, userId int64, schedulingJSON []byte, primaryOriginsJSON []byte, backupOriginsJSON []byte) (int64, error) {
+func (this *ReverseProxyDAO) CreateReverseProxy(tx *dbs.Tx, adminId int64, userId int64, schedulingJSON []byte, primaryOriginRefsJSON []byte, backupOriginRefsJSON []byte) (int64, error) {
+	// decode origins
+	var primaryOriginRefs []*serverconfigs.OriginRef
+	if len(primaryOriginRefsJSON) > 0 {
+		err := json.Unmarshal(primaryOriginRefsJSON, &primaryOriginRefs)
+		if err != nil {
+			return 0, fmt.Errorf("decode 'primaryOriginRefs' failed: " + err.Error())
+		}
+	}
+
+	var backupOriginRefs []*serverconfigs.OriginRef
+	if len(backupOriginRefsJSON) > 0 {
+		err := json.Unmarshal(backupOriginRefsJSON, &backupOriginRefs)
+		if err != nil {
+			return 0, fmt.Errorf("decode 'backupOriginRefs' failed: " + err.Error())
+		}
+	}
+
 	var op = NewReverseProxyOperator()
 	op.IsOn = true
 	op.State = ReverseProxyStateEnabled
@@ -233,18 +251,35 @@ func (this *ReverseProxyDAO) CreateReverseProxy(tx *dbs.Tx, adminId int64, userI
 	if IsNotNull(schedulingJSON) {
 		op.Scheduling = string(schedulingJSON)
 	}
-	if IsNotNull(primaryOriginsJSON) {
-		op.PrimaryOrigins = string(primaryOriginsJSON)
+	if IsNotNull(primaryOriginRefsJSON) {
+		op.PrimaryOrigins = string(primaryOriginRefsJSON)
 	}
-	if IsNotNull(backupOriginsJSON) {
-		op.BackupOrigins = string(backupOriginsJSON)
+	if IsNotNull(backupOriginRefsJSON) {
+		op.BackupOrigins = string(backupOriginRefsJSON)
 	}
 	err = this.Save(tx, op)
 	if err != nil {
 		return 0, err
 	}
 
-	return types.Int64(op.Id), nil
+	var reverseProxyId = types.Int64(op.Id)
+
+	// set 'reverseProxyId' of origins
+	for _, originRef := range primaryOriginRefs {
+		err = SharedOriginDAO.UpdateOriginReverseProxyId(tx, originRef.OriginId, reverseProxyId)
+		if err != nil {
+			return 0, err
+		}
+	}
+
+	for _, originRef := range backupOriginRefs {
+		err = SharedOriginDAO.UpdateOriginReverseProxyId(tx, originRef.OriginId, reverseProxyId)
+		if err != nil {
+			return 0, err
+		}
+	}
+
+	return reverseProxyId, nil
 }
 
 // CloneReverseProxy 复制反向代理
@@ -376,14 +411,30 @@ func (this *ReverseProxyDAO) UpdateReverseProxyScheduling(tx *dbs.Tx, reversePro
 }
 
 // UpdateReverseProxyPrimaryOrigins 修改主要源站
-func (this *ReverseProxyDAO) UpdateReverseProxyPrimaryOrigins(tx *dbs.Tx, reverseProxyId int64, originRefs []byte) error {
+func (this *ReverseProxyDAO) UpdateReverseProxyPrimaryOrigins(tx *dbs.Tx, reverseProxyId int64, originRefsJSON []byte) error {
 	if reverseProxyId <= 0 {
 		return errors.New("invalid reverseProxyId")
 	}
+
+	// set 'reverseProxyId' of origins
+	if len(originRefsJSON) > 0 {
+		var originRefs []*serverconfigs.OriginRef
+		err := json.Unmarshal(originRefsJSON, &originRefs)
+		if err != nil {
+			return fmt.Errorf("decode 'originRefs' failed: " + err.Error())
+		}
+		for _, originRef := range originRefs {
+			err = SharedOriginDAO.UpdateOriginReverseProxyId(tx, originRef.OriginId, reverseProxyId)
+			if err != nil {
+				return err
+			}
+		}
+	}
+
 	var op = NewReverseProxyOperator()
 	op.Id = reverseProxyId
-	if len(originRefs) > 0 {
-		op.PrimaryOrigins = originRefs
+	if len(originRefsJSON) > 0 {
+		op.PrimaryOrigins = originRefsJSON
 	} else {
 		op.PrimaryOrigins = "[]"
 	}
@@ -395,14 +446,30 @@ func (this *ReverseProxyDAO) UpdateReverseProxyPrimaryOrigins(tx *dbs.Tx, revers
 }
 
 // UpdateReverseProxyBackupOrigins 修改备用源站
-func (this *ReverseProxyDAO) UpdateReverseProxyBackupOrigins(tx *dbs.Tx, reverseProxyId int64, origins []byte) error {
+func (this *ReverseProxyDAO) UpdateReverseProxyBackupOrigins(tx *dbs.Tx, reverseProxyId int64, originRefsJSON []byte) error {
 	if reverseProxyId <= 0 {
 		return errors.New("invalid reverseProxyId")
 	}
+
+	// set 'reverseProxyId' of origins
+	if len(originRefsJSON) > 0 {
+		var originRefs []*serverconfigs.OriginRef
+		err := json.Unmarshal(originRefsJSON, &originRefs)
+		if err != nil {
+			return fmt.Errorf("decode 'originRefs' failed: " + err.Error())
+		}
+		for _, originRef := range originRefs {
+			err = SharedOriginDAO.UpdateOriginReverseProxyId(tx, originRef.OriginId, reverseProxyId)
+			if err != nil {
+				return err
+			}
+		}
+	}
+
 	var op = NewReverseProxyOperator()
 	op.Id = reverseProxyId
-	if len(origins) > 0 {
-		op.BackupOrigins = origins
+	if len(originRefsJSON) > 0 {
+		op.BackupOrigins = originRefsJSON
 	} else {
 		op.BackupOrigins = "[]"
 	}
