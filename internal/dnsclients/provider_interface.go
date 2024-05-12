@@ -39,4 +39,10 @@ type ProviderInterface interface {
 
 	// DefaultRoute 默认线路
 	DefaultRoute() string
+
+	// SetMinTTL 设置最小TTL
+	SetMinTTL(ttl int32)
+
+	// MinTTL 最小TTL
+	MinTTL() int32
 }
