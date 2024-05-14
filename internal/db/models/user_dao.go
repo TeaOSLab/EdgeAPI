@@ -322,8 +322,8 @@ func (this *UserDAO) UpdateUserPassword(tx *dbs.Tx, userId int64, password strin
 }
 
 // CountAllEnabledUsers 计算用户数量
-func (this *UserDAO) CountAllEnabledUsers(tx *dbs.Tx, clusterId int64, keyword string, isVerifying bool) (int64, error) {
-	query := this.Query(tx)
+func (this *UserDAO) CountAllEnabledUsers(tx *dbs.Tx, clusterId int64, keyword string, isVerifying bool, mobileIsVerifiedFlag int32) (int64, error) {
+	var query = this.Query(tx)
 	query.State(UserStateEnabled)
 	if clusterId > 0 {
 		query.Attr("clusterId", clusterId)
@@ -336,6 +336,14 @@ func (this *UserDAO) CountAllEnabledUsers(tx *dbs.Tx, clusterId int64, keyword s
 		query.Where("(isVerified=0 OR (id IN (SELECT userId FROM " + SharedUserIdentityDAO.Table + " WHERE status=:identityStatus AND state=1)))")
 		query.Param("identityStatus", userconfigs.UserIdentityStatusSubmitted)
 	}
+
+	// 手机号是否已验证
+	if mobileIsVerifiedFlag == 1 {
+		query.Where("LENGTH(verifiedMobile)>0")
+	} else if mobileIsVerifiedFlag == 0 {
+		query.Where("(verifiedMobile IS NULL OR LENGTH(verifiedMobile)=0)")
+	}
+
 	return query.Count()
 }
 
@@ -349,8 +357,8 @@ func (this *UserDAO) CountAllVerifyingUsers(tx *dbs.Tx) (int64, error) {
 }
 
 // ListEnabledUsers 列出单页用户
-func (this *UserDAO) ListEnabledUsers(tx *dbs.Tx, clusterId int64, keyword string, isVerifying bool, offset int64, size int64) (result []*User, err error) {
-	query := this.Query(tx)
+func (this *UserDAO) ListEnabledUsers(tx *dbs.Tx, clusterId int64, keyword string, isVerifying bool, mobileIsVerifiedFlag int32, offset int64, size int64) (result []*User, err error) {
+	var query = this.Query(tx)
 	query.State(UserStateEnabled)
 	if clusterId > 0 {
 		query.Attr("clusterId", clusterId)
@@ -363,6 +371,14 @@ func (this *UserDAO) ListEnabledUsers(tx *dbs.Tx, clusterId int64, keyword strin
 		query.Where("(isVerified=0 OR (id IN (SELECT userId FROM " + SharedUserIdentityDAO.Table + " WHERE status=:identityStatus AND state=1)))")
 		query.Param("identityStatus", userconfigs.UserIdentityStatusSubmitted)
 	}
+
+	// 手机号是否已验证
+	if mobileIsVerifiedFlag == 1 {
+		query.Where("LENGTH(verifiedMobile)>0")
+	} else if mobileIsVerifiedFlag == 0 {
+		query.Where("(verifiedMobile IS NULL OR LENGTH(verifiedMobile)=0)")
+	}
+
 	_, err = query.
 		DescPk().
 		Offset(offset).

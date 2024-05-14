@@ -593,7 +593,7 @@ func (this *AdminService) ComposeAdminDashboard(ctx context.Context, req *pb.Com
 
 	// 用户数
 	this.BeginTag(ctx, "SharedUserDAO.CountAllEnabledUsers")
-	countUsers, err := models.SharedUserDAO.CountAllEnabledUsers(tx, 0, "", false)
+	countUsers, err := models.SharedUserDAO.CountAllEnabledUsers(tx, 0, "", false, -1)
 	this.EndTag(ctx, "SharedUserDAO.CountAllEnabledUsers")
 	if err != nil {
 		return nil, err
