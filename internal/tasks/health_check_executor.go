@@ -272,6 +272,7 @@ func (this *HealthCheckExecutor) runNodeOnce(healthCheckConfig *serverconfigs.He
 	if err != nil {
 		return err
 	}
+	req.Close = true
 	if len(healthCheckConfig.UserAgent) > 0 {
 		req.Header.Set("User-Agent", healthCheckConfig.UserAgent)
 	} else {
@@ -302,9 +303,9 @@ func (this *HealthCheckExecutor) runNodeOnce(healthCheckConfig *serverconfigs.He
 				}
 				return net.DialTimeout(network, configutils.QuoteIP(result.NodeAddr)+":"+port, timeout)
 			},
-			MaxIdleConns:          1,
-			MaxIdleConnsPerHost:   1,
-			MaxConnsPerHost:       1,
+			MaxIdleConns:          3,
+			MaxIdleConnsPerHost:   3,
+			MaxConnsPerHost:       3,
 			IdleConnTimeout:       10 * time.Second,
 			ExpectContinueTimeout: 1 * time.Second,
 			TLSHandshakeTimeout:   0,
