@@ -34,7 +34,7 @@ func TestServerDAO_CreateManyServers(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		serverId, err := dao.CreateServer(tx, 0, 0, serverconfigs.ServerTypeHTTPProxy, "TEST"+types.String(i), "", serverNamesJSON, false, nil, nil, nil, nil, nil, nil, nil, 0, nil, 1, nil, nil, nil, 0)
+		serverId, err := dao.CreateServer(tx, 0, 0, serverconfigs.ServerTypeHTTPProxy, "TEST"+types.String(i), "", serverNamesJSON, false, nil, nil, nil, nil, nil, nil, 0, nil, 0, nil, nil, nil, 0)
 		if err != nil {
 			t.Fatal(err)
 		}
