@@ -297,7 +297,7 @@ func (this *IPItemDAO) DeleteOldItemWithValue(tx *dbs.Tx, listId int64, value st
 	}
 	ones, err := this.Query(tx).
 		ResultPk().
-		UseIndex("ipFrom").
+		UseIndex("value").
 		Attr("listId", listId).
 		Attr("value", value).
 		Attr("state", IPItemStateEnabled).
