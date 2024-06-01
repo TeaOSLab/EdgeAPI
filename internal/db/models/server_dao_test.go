@@ -27,7 +27,7 @@ func TestServerDAO_CreateManyServers(t *testing.T) {
 	for i := 0; i < count; i++ {
 		var serverNames = []*serverconfigs.ServerNameConfig{
 			{
-				Name: "s" + types.String(i) + ".teaos.cn",
+				Name: "s" + types.String(i) + ".example.com",
 			},
 		}
 		serverNamesJSON, err := json.Marshal(serverNames)
@@ -142,7 +142,7 @@ func TestServerDAO_ExistServerNameInCluster(t *testing.T) {
 
 	var tx *dbs.Tx
 	{
-		exist, err := models.SharedServerDAO.ExistServerNameInCluster(tx, 18, "hello.teaos.cn", 0, true)
+		exist, err := models.SharedServerDAO.ExistServerNameInCluster(tx, 18, "hello.example.com", 0, true)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -150,7 +150,7 @@ func TestServerDAO_ExistServerNameInCluster(t *testing.T) {
 	}
 
 	{
-		exist, err := models.SharedServerDAO.ExistServerNameInCluster(tx, 18, "cdn.teaos.cn", 0, true)
+		exist, err := models.SharedServerDAO.ExistServerNameInCluster(tx, 18, "cdn.example.com", 0, true)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -158,7 +158,7 @@ func TestServerDAO_ExistServerNameInCluster(t *testing.T) {
 	}
 
 	{
-		exist, err := models.SharedServerDAO.ExistServerNameInCluster(tx, 18, "cdn.teaos.cn", 23, true)
+		exist, err := models.SharedServerDAO.ExistServerNameInCluster(tx, 18, "cdn.example.com", 23, true)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -208,7 +208,7 @@ func TestServerDAO_FindAllEnabledServersWithNode_Cache(t *testing.T) {
 }
 
 func TestServerDAO_FindAllEnabledServersWithDomain(t *testing.T) {
-	for _, domain := range []string{"yun4s.cn", "teaos.cn", "teaos2.cn", "cdn.teaos.cn", "cdn100.teaos.cn"} {
+	for _, domain := range []string{"yun4s.cn", "example.com", "teaos2.cn", "cdn.example.com", "cdn100.example.com"} {
 		servers, err := models.NewServerDAO().FindAllEnabledServersWithDomain(nil, domain)
 		if err != nil {
 			t.Fatal(err)
@@ -227,7 +227,7 @@ func TestServerDAO_FindEnabledServerWithDomain(t *testing.T) {
 	var dao = models.NewServerDAO()
 	var tx *dbs.Tx
 
-	for _, domain := range []string{"a", "a.com", "teaos.cn", "www.teaos.cn", "cdn.teaos.cn", "google.com"} {
+	for _, domain := range []string{"a", "a.com", "example.com", "www.example.com", "cdn.example.com", "google.com"} {
 		var before = time.Now()
 		server, err := dao.FindEnabledServerWithDomain(tx, 0, domain)
 		var costMs = time.Since(before).Seconds() * 1000

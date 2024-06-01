@@ -58,7 +58,7 @@ func TestGenerate(t *testing.T) {
 		t.Fatal(err)
 	}
 	myUser := &MyUser{
-		Email: "test1@teaos.cn",
+		Email: "test1@example.com",
 		key:   privateKey,
 	}
 
@@ -102,7 +102,7 @@ func TestGenerate_EAB(t *testing.T) {
 		t.Fatal(err)
 	}
 	myUser := &MyUser{
-		Email: "test1@teaos.cn",
+		Email: "test1@example.com",
 		key:   privateKey,
 	}
 
@@ -136,7 +136,7 @@ func TestGenerate_EAB(t *testing.T) {
 	myUser.Registration = reg
 
 	request := certificate.ObtainRequest{
-		Domains: []string{"teaos.cn"},
+		Domains: []string{"example.com"},
 		Bundle:  true,
 	}
 	certificates, err := client.Certificate.Obtain(request)

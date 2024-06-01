@@ -37,9 +37,9 @@ func TestCloudFlareProvider_GetRecords(t *testing.T) {
 		logs.PrintAsJSON(records, t)
 	}
 
-	t.Log("===teaos.cn===")
+	t.Log("===example.com===")
 	{
-		records, err := provider.GetRecords("teaos.cn")
+		records, err := provider.GetRecords("example.com")
 		if err != nil {
 			t.Fatal(err)
 		}
