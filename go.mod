@@ -6,7 +6,7 @@ replace github.com/TeaOSLab/EdgeCommon => ../EdgeCommon
 
 require (
 	github.com/Azure/azure-sdk-for-go/sdk/azcore v1.11.1
-	github.com/Azure/azure-sdk-for-go/sdk/azidentity v1.5.2
+	github.com/Azure/azure-sdk-for-go/sdk/azidentity v1.6.0
 	github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/dns/armdns v1.2.0
 	github.com/TeaOSLab/EdgeCommon v0.0.0-00010101000000-000000000000
 	github.com/aliyun/alibaba-cloud-sdk-go v1.62.712
@@ -27,15 +27,15 @@ require (
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.898
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/dnspod v1.0.898
 	github.com/volcengine/volc-sdk-golang v1.0.124
-	golang.org/x/crypto v0.22.0
-	golang.org/x/net v0.24.0
-	golang.org/x/sys v0.19.0
+	golang.org/x/crypto v0.24.0
+	golang.org/x/net v0.26.0
+	golang.org/x/sys v0.21.0
 	google.golang.org/grpc v1.63.1
 	gopkg.in/yaml.v3 v3.0.1
 )
 
 require (
-	github.com/Azure/azure-sdk-for-go/sdk/internal v1.5.2 // indirect
+	github.com/Azure/azure-sdk-for-go/sdk/internal v1.8.0 // indirect
 	github.com/AzureAD/microsoft-authentication-library-for-go v1.2.2 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/go-jose/go-jose/v3 v3.0.1 // indirect
@@ -62,8 +62,8 @@ require (
 	github.com/yusufpapurcu/wmi v1.2.2 // indirect
 	golang.org/x/mod v0.17.0 // indirect
 	golang.org/x/sync v0.7.0 // indirect
-	golang.org/x/text v0.14.0 // indirect
-	golang.org/x/tools v0.20.0 // indirect
+	golang.org/x/text v0.16.0 // indirect
+	golang.org/x/tools v0.21.1-0.20240508182429-e35e4ccd0d2d // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240318140521-94a12d6c2237 // indirect
 	google.golang.org/protobuf v1.33.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
