@@ -2,6 +2,7 @@ package nameservers
 
 import (
 	"encoding/json"
+
 	"github.com/TeaOSLab/EdgeAPI/internal/db/models"
 	"github.com/TeaOSLab/EdgeAPI/internal/remotelogs"
 )

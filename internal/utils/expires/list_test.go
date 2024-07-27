@@ -1,14 +1,15 @@
 package expires
 
 import (
-	"github.com/TeaOSLab/EdgeAPI/internal/utils"
-	"github.com/iwind/TeaGo/assert"
-	"github.com/iwind/TeaGo/logs"
-	timeutil "github.com/iwind/TeaGo/utils/time"
 	"math"
 	"runtime"
 	"testing"
 	"time"
+
+	"github.com/TeaOSLab/EdgeAPI/internal/utils"
+	"github.com/iwind/TeaGo/assert"
+	"github.com/iwind/TeaGo/logs"
+	timeutil "github.com/iwind/TeaGo/utils/time"
 )
 
 func TestList_Add(t *testing.T) {

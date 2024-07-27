@@ -2,6 +2,10 @@ package models
 
 import (
 	"errors"
+	"math"
+	"sync"
+	"time"
+
 	"github.com/TeaOSLab/EdgeAPI/internal/goman"
 	"github.com/TeaOSLab/EdgeAPI/internal/remotelogs"
 	"github.com/TeaOSLab/EdgeAPI/internal/utils/regexputils"
@@ -12,9 +16,6 @@ import (
 	"github.com/iwind/TeaGo/rands"
 	"github.com/iwind/TeaGo/types"
 	timeutil "github.com/iwind/TeaGo/utils/time"
-	"math"
-	"sync"
-	"time"
 )
 
 type UserPlanBandwidthStatDAO dbs.DAO

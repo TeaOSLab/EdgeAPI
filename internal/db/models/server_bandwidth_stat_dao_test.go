@@ -2,6 +2,9 @@ package models_test
 
 import (
 	"fmt"
+	"testing"
+	"time"
+
 	"github.com/TeaOSLab/EdgeAPI/internal/db/models"
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/iwind/TeaGo/bootstrap"
@@ -9,8 +12,6 @@ import (
 	"github.com/iwind/TeaGo/logs"
 	"github.com/iwind/TeaGo/rands"
 	timeutil "github.com/iwind/TeaGo/utils/time"
-	"testing"
-	"time"
 )
 
 func TestServerBandwidthStatDAO_UpdateServerBandwidth(t *testing.T) {

@@ -1,10 +1,11 @@
-// Copyright 2023 GoEdge CDN goedge.cdn@gmail.com. All rights reserved. Official site: https://goedge.cn .
+// Copyright 2023 GoEdge CDN goedge.cdn@gmail.com. All rights reserved. Official site: https://goedge.cloud .
 
 package models_test
 
 import (
-	"github.com/TeaOSLab/EdgeAPI/internal/db/models"
 	"testing"
+
+	"github.com/TeaOSLab/EdgeAPI/internal/db/models"
 )
 
 func TestNewSysLockerIncrement(t *testing.T) {

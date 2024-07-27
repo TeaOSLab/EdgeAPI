@@ -1,8 +1,9 @@
 package models
 
 import (
-	_ "github.com/go-sql-driver/mysql"
 	"testing"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func TestDBNodeDAO_EncodePassword(t *testing.T) {

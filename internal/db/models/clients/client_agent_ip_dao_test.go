@@ -1,10 +1,11 @@
 package clients_test
 
 import (
+	"testing"
+
 	"github.com/TeaOSLab/EdgeAPI/internal/db/models/clients"
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/iwind/TeaGo/bootstrap"
-	"testing"
 )
 
 func TestClientAgentIPDAO_CreateIP(t *testing.T) {

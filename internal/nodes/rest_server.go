@@ -4,11 +4,6 @@ import (
 	"context"
 	"crypto/tls"
 	"encoding/json"
-	"github.com/TeaOSLab/EdgeAPI/internal/db/models"
-	"github.com/TeaOSLab/EdgeAPI/internal/rpc/services"
-	rpcutils "github.com/TeaOSLab/EdgeAPI/internal/rpc/utils"
-	"github.com/TeaOSLab/EdgeAPI/internal/utils/sizes"
-	"github.com/iwind/TeaGo/maps"
 	"io"
 	"net"
 	"net/http"
@@ -16,6 +11,12 @@ import (
 	"regexp"
 	"strings"
 	"time"
+
+	"github.com/TeaOSLab/EdgeAPI/internal/db/models"
+	"github.com/TeaOSLab/EdgeAPI/internal/rpc/services"
+	rpcutils "github.com/TeaOSLab/EdgeAPI/internal/rpc/utils"
+	"github.com/TeaOSLab/EdgeAPI/internal/utils/sizes"
+	"github.com/iwind/TeaGo/maps"
 )
 
 var servicePathReg = regexp.MustCompile(`^/([a-zA-Z0-9]+)/([a-zA-Z0-9]+)$`)

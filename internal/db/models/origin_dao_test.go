@@ -1,9 +1,10 @@
 package models
 
 import (
+	"testing"
+
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/iwind/TeaGo/dbs"
-	"testing"
 )
 
 func TestOriginServerDAO_ComposeOriginConfig(t *testing.T) {

@@ -15,11 +15,17 @@ const (
 	ProviderTypeLocalEdgeDNS ProviderType = "localEdgeDNS" // 和当前系统集成的EdgeDNS
 	ProviderTypeEdgeDNSAPI   ProviderType = "edgeDNSAPI"   // 通过API连接的EdgeDNS
 	ProviderTypeCustomHTTP   ProviderType = "customHTTP"   // 自定义HTTP接口
+	ProviderTypeDNSLA        ProviderType = "dnsla"        // DNSLA
 )
 
 // FindAllProviderTypes 所有的服务商类型
 func FindAllProviderTypes() []maps.Map {
 	var typeMaps = []maps.Map{
+		{
+			"name":        "DNS.LA",
+			"code":        ProviderTypeDNSLA,
+			"description": "DNS.LA提供的DNS服务。",
+		},
 		{
 			"name":        "阿里云DNS",
 			"code":        ProviderTypeAliDNS,
@@ -52,7 +58,7 @@ func FindAllProviderTypes() []maps.Map {
 	typeMaps = append(typeMaps, maps.Map{
 		"name":        "自定义HTTP DNS",
 		"code":        ProviderTypeCustomHTTP,
-		"description": "通过自定义的HTTP接口提供DNS服务，具体使用方法请参考官网文档：https://goedge.cn/docs/DNS/CustomHTTP.md ",
+		"description": "通过自定义的HTTP接口提供DNS服务，具体使用方法请参考官网文档：https://goedge.cloud/docs/DNS/CustomHTTP.md ",
 	})
 	return typeMaps
 }

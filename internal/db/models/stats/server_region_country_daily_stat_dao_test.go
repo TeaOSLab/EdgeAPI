@@ -2,11 +2,12 @@ package stats
 
 import (
 	"encoding/json"
+	"testing"
+
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/iwind/TeaGo/bootstrap"
 	"github.com/iwind/TeaGo/dbs"
 	timeutil "github.com/iwind/TeaGo/utils/time"
-	"testing"
 )
 
 func TestServerRegionCountryDailyStatDAO_IncreaseDailyStat(t *testing.T) {

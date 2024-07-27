@@ -4,6 +4,13 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"io"
+	"net"
+	"path/filepath"
+	"strings"
+	"sync"
+	"time"
+
 	"github.com/TeaOSLab/EdgeAPI/internal/db/models"
 	"github.com/TeaOSLab/EdgeAPI/internal/db/models/dns"
 	"github.com/TeaOSLab/EdgeAPI/internal/dnsclients/dnstypes"
@@ -25,12 +32,6 @@ import (
 	"github.com/iwind/TeaGo/lists"
 	"github.com/iwind/TeaGo/types"
 	stringutil "github.com/iwind/TeaGo/utils/string"
-	"io"
-	"net"
-	"path/filepath"
-	"strings"
-	"sync"
-	"time"
 )
 
 // NodeVersionCache 节点版本缓存
@@ -387,6 +388,7 @@ func (this *NodeService) ListEnabledNodesMatch(ctx context.Context, req *pb.List
 			OfflineDay:            node.OfflineDay,
 			IsBackupForCluster:    node.IsBackupForCluster,
 			IsBackupForGroup:      node.IsBackupForGroup,
+			BypassMobile:          node.BypassMobile,
 		})
 	}
 
@@ -689,6 +691,7 @@ func (this *NodeService) FindEnabledNode(ctx context.Context, req *pb.FindEnable
 		OfflineDay:             node.OfflineDay,
 		IsBackupForCluster:     node.IsBackupForCluster,
 		IsBackupForGroup:       node.IsBackupForGroup,
+		BypassMobile:           node.BypassMobile,
 	}}, nil
 }
 
@@ -1752,6 +1755,21 @@ func (this *NodeService) UpdateNodeSystem(ctx context.Context, req *pb.UpdateNod
 
 	var tx = this.NullTx()
 	err = models.SharedNodeDAO.UpdateNodeSystem(tx, req.NodeId, req.MaxCPU)
+	if err != nil {
+		return nil, err
+	}
+	return this.Success()
+}
+
+// UpdateNodeBypassMobile 修改节点过移动
+func (this *NodeService) UpdateNodeBypassMobile(ctx context.Context, req *pb.UpdateNodeBypassMobile) (*pb.RPCSuccess, error) {
+	_, err := this.ValidateAdmin(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	var tx = this.NullTx()
+	err = models.SharedNodeDAO.UpdateNodeBypassMobile(tx, req.NodeId, req.BypassMobile)
 	if err != nil {
 		return nil, err
 	}

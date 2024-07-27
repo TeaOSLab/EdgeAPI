@@ -5,14 +5,15 @@ import (
 	"crypto/ecdsa"
 	"crypto/elliptic"
 	"crypto/rand"
+	"io"
+	"log"
+	"testing"
+
 	"github.com/go-acme/lego/v4/certcrypto"
 	"github.com/go-acme/lego/v4/certificate"
 	"github.com/go-acme/lego/v4/challenge/dns01"
 	"github.com/go-acme/lego/v4/lego"
 	acmelog "github.com/go-acme/lego/v4/log"
-	"io"
-	"log"
-	"testing"
 
 	"github.com/go-acme/lego/v4/registration"
 )

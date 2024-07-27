@@ -3,9 +3,10 @@
 package setup_test
 
 import (
+	"testing"
+
 	"github.com/TeaOSLab/EdgeAPI/internal/setup"
 	"github.com/iwind/TeaGo/assert"
-	"testing"
 )
 
 func TestComposeSQLVersion(t *testing.T) {

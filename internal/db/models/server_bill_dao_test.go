@@ -1,11 +1,12 @@
 package models
 
 import (
+	"testing"
+
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/iwind/TeaGo/bootstrap"
 	"github.com/iwind/TeaGo/dbs"
 	timeutil "github.com/iwind/TeaGo/utils/time"
-	"testing"
 )
 
 func TestServerBillDAO_CreateOrUpdateServerBill(t *testing.T) {

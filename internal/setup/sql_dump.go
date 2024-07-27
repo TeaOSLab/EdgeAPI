@@ -3,17 +3,18 @@ package setup
 import (
 	"errors"
 	"fmt"
-	"github.com/go-sql-driver/mysql"
-	"github.com/iwind/TeaGo/dbs"
-	"github.com/iwind/TeaGo/lists"
-	"github.com/iwind/TeaGo/maps"
-	"github.com/iwind/TeaGo/types"
 	"io"
 	"regexp"
 	"runtime"
 	"sort"
 	"strings"
 	"sync"
+
+	"github.com/go-sql-driver/mysql"
+	"github.com/iwind/TeaGo/dbs"
+	"github.com/iwind/TeaGo/lists"
+	"github.com/iwind/TeaGo/maps"
+	"github.com/iwind/TeaGo/types"
 )
 
 var recordsTables = []*SQLRecordsTable{

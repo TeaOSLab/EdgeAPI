@@ -2,13 +2,14 @@ package dnsclients
 
 import (
 	"encoding/json"
+	"testing"
+
 	"github.com/TeaOSLab/EdgeAPI/internal/dnsclients/dnstypes"
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/iwind/TeaGo/bootstrap"
 	"github.com/iwind/TeaGo/dbs"
 	"github.com/iwind/TeaGo/logs"
 	"github.com/iwind/TeaGo/maps"
-	"testing"
 )
 
 func TestAliDNSProvider_GetDomains(t *testing.T) {

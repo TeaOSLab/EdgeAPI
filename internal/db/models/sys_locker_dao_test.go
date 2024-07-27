@@ -1,12 +1,13 @@
 package models
 
 import (
-	_ "github.com/go-sql-driver/mysql"
-	"github.com/iwind/TeaGo/dbs"
-	"github.com/iwind/TeaGo/types"
 	"sync"
 	"testing"
 	"time"
+
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/iwind/TeaGo/dbs"
+	"github.com/iwind/TeaGo/types"
 )
 
 func TestSysLockerDAO_Lock(t *testing.T) {

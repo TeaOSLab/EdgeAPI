@@ -2,11 +2,12 @@ package models
 
 import (
 	"errors"
+	"strings"
+	"sync"
+
 	"github.com/go-sql-driver/mysql"
 	"github.com/iwind/TeaGo/dbs"
 	"github.com/iwind/TeaGo/types"
-	"strings"
-	"sync"
 )
 
 // SharedCacheLocker 缓存专用Locker

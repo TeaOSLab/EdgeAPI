@@ -1,11 +1,12 @@
 package stats
 
 import (
+	"testing"
+	"time"
+
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/iwind/TeaGo/dbs"
 	timeutil "github.com/iwind/TeaGo/utils/time"
-	"testing"
-	"time"
 )
 
 func TestTrafficHourlyStatDAO_IncreaseDayBytes(t *testing.T) {

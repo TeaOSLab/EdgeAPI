@@ -3,10 +3,11 @@
 package installers
 
 import (
-	"golang.org/x/crypto/ssh"
 	"net"
 	"testing"
 	"time"
+
+	"golang.org/x/crypto/ssh"
 )
 
 func testSSHClient(t *testing.T, username string, password string) *SSHClient {

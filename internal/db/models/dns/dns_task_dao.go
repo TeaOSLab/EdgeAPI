@@ -1,12 +1,13 @@
 package dns
 
 import (
+	"time"
+
 	"github.com/TeaOSLab/EdgeAPI/internal/errors"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/iwind/TeaGo/Tea"
 	"github.com/iwind/TeaGo/dbs"
 	"github.com/iwind/TeaGo/maps"
-	"time"
 )
 
 type DNSTaskType = string

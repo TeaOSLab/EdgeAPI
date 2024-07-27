@@ -3,6 +3,15 @@ package models
 import (
 	"bytes"
 	"encoding/json"
+	"net"
+	"net/http"
+	"net/url"
+	"regexp"
+	"sort"
+	"strings"
+	"sync"
+	"time"
+
 	dbutils "github.com/TeaOSLab/EdgeAPI/internal/db/utils"
 	"github.com/TeaOSLab/EdgeAPI/internal/errors"
 	"github.com/TeaOSLab/EdgeAPI/internal/goman"
@@ -22,14 +31,6 @@ import (
 	"github.com/iwind/TeaGo/types"
 	timeutil "github.com/iwind/TeaGo/utils/time"
 	"golang.org/x/net/idna"
-	"net"
-	"net/http"
-	"net/url"
-	"regexp"
-	"sort"
-	"strings"
-	"sync"
-	"time"
 )
 
 type HTTPAccessLogDAO dbs.DAO

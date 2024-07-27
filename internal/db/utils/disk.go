@@ -1,13 +1,14 @@
-// Copyright 2022 GoEdge CDN goedge.cdn@gmail.com. All rights reserved. Official site: https://goedge.cn .
+// Copyright 2022 GoEdge CDN goedge.cdn@gmail.com. All rights reserved. Official site: https://goedge.cloud .
 
 package dbutils
 
 import (
+	"time"
+
 	"github.com/TeaOSLab/EdgeAPI/internal/goman"
 	"github.com/go-sql-driver/mysql"
 	"github.com/iwind/TeaGo/dbs"
 	"golang.org/x/sys/unix"
-	"time"
 )
 
 const minFreeSpaceGB = 3

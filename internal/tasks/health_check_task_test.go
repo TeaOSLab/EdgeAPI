@@ -1,11 +1,12 @@
-// Copyright 2023 GoEdge CDN goedge.cdn@gmail.com. All rights reserved. Official site: https://goedge.cn .
+// Copyright 2023 GoEdge CDN goedge.cdn@gmail.com. All rights reserved. Official site: https://goedge.cloud .
 
 package tasks_test
 
 import (
-	"github.com/TeaOSLab/EdgeAPI/internal/tasks"
 	"testing"
 	"time"
+
+	"github.com/TeaOSLab/EdgeAPI/internal/tasks"
 )
 
 func TestNewHealthCheckTask(t *testing.T) {

@@ -2,6 +2,10 @@ package models
 
 import (
 	"encoding/json"
+	"sort"
+	"strings"
+	"sync"
+
 	"github.com/TeaOSLab/EdgeAPI/internal/errors"
 	"github.com/TeaOSLab/EdgeAPI/internal/utils"
 	"github.com/TeaOSLab/EdgeCommon/pkg/nodeconfigs"
@@ -10,9 +14,6 @@ import (
 	"github.com/iwind/TeaGo/Tea"
 	"github.com/iwind/TeaGo/dbs"
 	"github.com/iwind/TeaGo/types"
-	"sort"
-	"strings"
-	"sync"
 )
 
 const (

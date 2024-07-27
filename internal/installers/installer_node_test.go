@@ -1,8 +1,9 @@
 package installers
 
 import (
-	"github.com/TeaOSLab/EdgeAPI/internal/db/models"
 	"testing"
+
+	"github.com/TeaOSLab/EdgeAPI/internal/db/models"
 )
 
 func TestNodeInstaller_Install(t *testing.T) {

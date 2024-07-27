@@ -2,9 +2,10 @@ package numberutils
 
 import (
 	"fmt"
-	"github.com/iwind/TeaGo/types"
 	"strconv"
 	"strings"
+
+	"github.com/iwind/TeaGo/types"
 )
 
 func FormatInt64(value int64) string {

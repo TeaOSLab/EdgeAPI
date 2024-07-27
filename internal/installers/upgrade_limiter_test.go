@@ -1,13 +1,14 @@
-// Copyright 2022 GoEdge CDN goedge.cdn@gmail.com. All rights reserved. Official site: https://goedge.cn .
+// Copyright 2022 GoEdge CDN goedge.cdn@gmail.com. All rights reserved. Official site: https://goedge.cloud .
 
 package installers_test
 
 import (
+	"testing"
+	"time"
+
 	"github.com/TeaOSLab/EdgeAPI/internal/installers"
 	"github.com/TeaOSLab/EdgeAPI/internal/utils/sizes"
 	"github.com/TeaOSLab/EdgeCommon/pkg/nodeconfigs"
-	"testing"
-	"time"
 )
 
 func TestNewUpgradeLimiter(t *testing.T) {

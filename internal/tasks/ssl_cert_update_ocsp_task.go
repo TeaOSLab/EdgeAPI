@@ -9,6 +9,10 @@ import (
 	"crypto/x509"
 	"errors"
 	"fmt"
+	"io"
+	"net/http"
+	"time"
+
 	teaconst "github.com/TeaOSLab/EdgeAPI/internal/const"
 	"github.com/TeaOSLab/EdgeAPI/internal/db/models"
 	"github.com/TeaOSLab/EdgeAPI/internal/goman"
@@ -16,9 +20,6 @@ import (
 	"github.com/TeaOSLab/EdgeAPI/internal/utils"
 	"github.com/iwind/TeaGo/dbs"
 	"golang.org/x/crypto/ocsp"
-	"io"
-	"net/http"
-	"time"
 )
 
 func init() {

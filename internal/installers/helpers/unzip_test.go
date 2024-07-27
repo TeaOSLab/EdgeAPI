@@ -1,10 +1,11 @@
 package helpers_test
 
 import (
+	"testing"
+
 	"github.com/TeaOSLab/EdgeAPI/internal/installers/helpers"
 	"github.com/iwind/TeaGo/Tea"
 	_ "github.com/iwind/TeaGo/bootstrap"
-	"testing"
 )
 
 func TestUnzip_Run(t *testing.T) {

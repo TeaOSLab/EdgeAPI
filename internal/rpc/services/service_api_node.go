@@ -6,6 +6,11 @@ import (
 	"crypto/md5"
 	"errors"
 	"fmt"
+	"io"
+	"os"
+	"path/filepath"
+	"runtime"
+
 	teaconst "github.com/TeaOSLab/EdgeAPI/internal/const"
 	"github.com/TeaOSLab/EdgeAPI/internal/db/models"
 	"github.com/TeaOSLab/EdgeAPI/internal/installers"
@@ -15,10 +20,6 @@ import (
 	"github.com/iwind/TeaGo/Tea"
 	"github.com/iwind/TeaGo/dbs"
 	stringutil "github.com/iwind/TeaGo/utils/string"
-	"io"
-	"os"
-	"path/filepath"
-	"runtime"
 )
 
 type APINodeService struct {

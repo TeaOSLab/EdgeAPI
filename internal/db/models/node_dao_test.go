@@ -5,6 +5,9 @@ package models_test
 
 import (
 	"encoding/json"
+	"testing"
+	"time"
+
 	teaconst "github.com/TeaOSLab/EdgeAPI/internal/const"
 	"github.com/TeaOSLab/EdgeAPI/internal/db/models"
 	"github.com/TeaOSLab/EdgeAPI/internal/utils"
@@ -12,8 +15,6 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/iwind/TeaGo/dbs"
 	"github.com/iwind/TeaGo/logs"
-	"testing"
-	"time"
 )
 
 func TestNodeDAO_FindAllNodeIdsMatch(t *testing.T) {

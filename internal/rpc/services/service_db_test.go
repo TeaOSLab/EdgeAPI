@@ -1,9 +1,10 @@
 package services
 
 import (
+	"testing"
+
 	"github.com/iwind/TeaGo/dbs"
 	"github.com/iwind/TeaGo/logs"
-	"testing"
 )
 
 func TestDBService_FindAllDBTables(t *testing.T) {

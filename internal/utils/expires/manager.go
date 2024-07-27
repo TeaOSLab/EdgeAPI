@@ -3,10 +3,11 @@
 package expires
 
 import (
-	"github.com/TeaOSLab/EdgeAPI/internal/goman"
-	"github.com/TeaOSLab/EdgeAPI/internal/zero"
 	"sync"
 	"time"
+
+	"github.com/TeaOSLab/EdgeAPI/internal/goman"
+	"github.com/TeaOSLab/EdgeAPI/internal/zero"
 )
 
 var SharedManager = NewManager()

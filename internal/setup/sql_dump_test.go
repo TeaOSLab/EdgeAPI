@@ -2,9 +2,10 @@ package setup
 
 import (
 	"encoding/json"
-	"github.com/iwind/TeaGo/dbs"
 	"testing"
 	"time"
+
+	"github.com/iwind/TeaGo/dbs"
 )
 
 func TestSQLDump_Dump(t *testing.T) {

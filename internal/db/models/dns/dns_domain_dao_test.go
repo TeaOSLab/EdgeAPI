@@ -1,9 +1,10 @@
 package dns
 
 import (
+	"testing"
+
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/iwind/TeaGo/dbs"
-	"testing"
 )
 
 func TestDNSDomainDAO_ExistDomainRecord(t *testing.T) {

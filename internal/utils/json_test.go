@@ -1,12 +1,13 @@
-// Copyright 2023 GoEdge CDN goedge.cdn@gmail.com. All rights reserved. Official site: https://goedge.cn .
+// Copyright 2023 GoEdge CDN goedge.cdn@gmail.com. All rights reserved. Official site: https://goedge.cloud .
 
 package utils_test
 
 import (
 	"errors"
+	"testing"
+
 	"github.com/TeaOSLab/EdgeAPI/internal/utils"
 	"github.com/iwind/TeaGo/logs"
-	"testing"
 )
 
 func TestJSONClone(t *testing.T) {

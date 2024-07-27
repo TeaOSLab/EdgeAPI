@@ -4,6 +4,11 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"regexp"
+	"strconv"
+	"strings"
+	"time"
+
 	teaconst "github.com/TeaOSLab/EdgeAPI/internal/const"
 	"github.com/TeaOSLab/EdgeAPI/internal/db/models/dns"
 	dbutils "github.com/TeaOSLab/EdgeAPI/internal/db/utils"
@@ -23,10 +28,6 @@ import (
 	"github.com/iwind/TeaGo/rands"
 	"github.com/iwind/TeaGo/types"
 	timeutil "github.com/iwind/TeaGo/utils/time"
-	"regexp"
-	"strconv"
-	"strings"
-	"time"
 )
 
 const (
@@ -3177,4 +3178,16 @@ func (this *ServerDAO) NotifyUserClustersChange(tx *dbs.Tx, userId int64) error 
 	}
 
 	return nil
+}
+
+// FindUserServerByServerName 根据域名查找Server
+func (this *ServerDAO) FindUserServerByServerName(tx *dbs.Tx, serverName string) (result []*Server, err error) {
+	_, err = this.Query(tx).
+		State(ServerStateEnabled).
+		Where("(JSON_CONTAINS(serverNames, :jsonQuery1) OR JSON_CONTAINS(serverNames, :jsonQuery2))").
+		Param("jsonQuery1", maps.Map{"name": serverName}.AsJSON()).
+		Param("jsonQuery2", maps.Map{"subNames": serverName}.AsJSON()).
+		Slice(&result).
+		FindAll()
+	return
 }

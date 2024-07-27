@@ -3,8 +3,9 @@
 package utils_test
 
 import (
-	"github.com/TeaOSLab/EdgeAPI/internal/utils"
 	"testing"
+
+	"github.com/TeaOSLab/EdgeAPI/internal/utils"
 )
 
 func TestSystemMemoryGB(t *testing.T) {

@@ -2,6 +2,7 @@ package dns
 
 import (
 	"encoding/json"
+
 	"github.com/iwind/TeaGo/maps"
 )
 

@@ -1,11 +1,12 @@
 package configs
 
 import (
+	"os"
+	"path/filepath"
+
 	teaconst "github.com/TeaOSLab/EdgeAPI/internal/const"
 	"github.com/iwind/TeaGo/Tea"
 	"gopkg.in/yaml.v3"
-	"os"
-	"path/filepath"
 )
 
 var sharedAPIConfig *APIConfig = nil

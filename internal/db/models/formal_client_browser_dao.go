@@ -2,6 +2,10 @@ package models
 
 import (
 	"encoding/json"
+	"strconv"
+	"strings"
+	"time"
+
 	dbutils "github.com/TeaOSLab/EdgeAPI/internal/db/utils"
 	"github.com/TeaOSLab/EdgeAPI/internal/errors"
 	"github.com/TeaOSLab/EdgeAPI/internal/utils/ttlcache"
@@ -9,9 +13,6 @@ import (
 	"github.com/iwind/TeaGo/Tea"
 	"github.com/iwind/TeaGo/dbs"
 	"github.com/iwind/TeaGo/types"
-	"strconv"
-	"strings"
-	"time"
 )
 
 const (

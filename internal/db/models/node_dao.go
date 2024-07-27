@@ -4,6 +4,11 @@ import (
 	"crypto/sha256"
 	"encoding/json"
 	"fmt"
+	"sort"
+	"strconv"
+	"strings"
+	"time"
+
 	teaconst "github.com/TeaOSLab/EdgeAPI/internal/const"
 	"github.com/TeaOSLab/EdgeAPI/internal/db/models/dns"
 	dbutils "github.com/TeaOSLab/EdgeAPI/internal/db/utils"
@@ -26,10 +31,6 @@ import (
 	"github.com/iwind/TeaGo/rands"
 	"github.com/iwind/TeaGo/types"
 	timeutil "github.com/iwind/TeaGo/utils/time"
-	"sort"
-	"strconv"
-	"strings"
-	"time"
 )
 
 const (
@@ -1022,6 +1023,7 @@ func (this *NodeDAO) ComposeNodeConfig(tx *dbs.Tx, nodeId int64, dataMap *shared
 		GroupId:       int64(node.GroupId),
 		EnableIPLists: node.EnableIPLists,
 		APINodeAddrs:  node.DecodeAPINodeAddrs(),
+		BypassMobile:  node.BypassMobile,
 
 		DataMap: dataMap,
 	}
@@ -1761,6 +1763,21 @@ func (this *NodeDAO) UpdateNodeSystem(tx *dbs.Tx, nodeId int64, maxCPU int32) er
 	var op = NewNodeOperator()
 	op.Id = nodeId
 	op.MaxCPU = maxCPU
+	err := this.Save(tx, op)
+	if err != nil {
+		return err
+	}
+	return this.NotifyUpdate(tx, nodeId)
+}
+
+// UpdateNodeBypassMobile 设置是否过移动
+func (this *NodeDAO) UpdateNodeBypassMobile(tx *dbs.Tx, nodeId int64, bypass int32) error {
+	if nodeId <= 0 {
+		return errors.New("invalid nodeId")
+	}
+	var op = NewNodeOperator()
+	op.Id = nodeId
+	op.BypassMobile = bypass
 	err := this.Save(tx, op)
 	if err != nil {
 		return err

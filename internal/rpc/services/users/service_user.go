@@ -3,6 +3,9 @@ package users
 import (
 	"context"
 	"encoding/json"
+	"strings"
+	"time"
+
 	teaconst "github.com/TeaOSLab/EdgeAPI/internal/const"
 	"github.com/TeaOSLab/EdgeAPI/internal/db/models"
 	"github.com/TeaOSLab/EdgeAPI/internal/errors"
@@ -16,8 +19,6 @@ import (
 	"github.com/TeaOSLab/EdgeCommon/pkg/userconfigs"
 	"github.com/iwind/TeaGo/types"
 	timeutil "github.com/iwind/TeaGo/utils/time"
-	"strings"
-	"time"
 )
 
 // UserService 用户相关服务

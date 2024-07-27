@@ -3,8 +3,9 @@
 package utils
 
 import (
-	"github.com/iwind/TeaGo/maps"
 	"sync"
+
+	"github.com/iwind/TeaGo/maps"
 )
 
 type CacheMap struct {

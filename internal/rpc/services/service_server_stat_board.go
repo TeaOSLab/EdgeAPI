@@ -4,6 +4,8 @@ package services
 
 import (
 	"context"
+	"time"
+
 	"github.com/TeaOSLab/EdgeAPI/internal/db/models"
 	"github.com/TeaOSLab/EdgeAPI/internal/db/models/regions"
 	"github.com/TeaOSLab/EdgeAPI/internal/db/models/stats"
@@ -16,7 +18,6 @@ import (
 	"github.com/TeaOSLab/EdgeCommon/pkg/serverconfigs"
 	"github.com/TeaOSLab/EdgeCommon/pkg/systemconfigs"
 	timeutil "github.com/iwind/TeaGo/utils/time"
-	"time"
 )
 
 // ServerStatBoardService 统计看板条目

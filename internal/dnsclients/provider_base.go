@@ -2,6 +2,7 @@ package dnsclients
 
 import (
 	"fmt"
+
 	"github.com/TeaOSLab/EdgeAPI/internal/dnsclients/dnstypes"
 )
 

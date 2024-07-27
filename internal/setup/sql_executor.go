@@ -4,6 +4,9 @@ import (
 	"crypto/rand"
 	"encoding/json"
 	"fmt"
+	"io"
+	"time"
+
 	"github.com/TeaOSLab/EdgeAPI/internal/configs"
 	"github.com/TeaOSLab/EdgeAPI/internal/db/models"
 	"github.com/TeaOSLab/EdgeCommon/pkg/dnsconfigs"
@@ -15,8 +18,6 @@ import (
 	"github.com/iwind/TeaGo/rands"
 	"github.com/iwind/TeaGo/types"
 	stringutil "github.com/iwind/TeaGo/utils/string"
-	"io"
-	"time"
 )
 
 // SQLExecutor 安装或升级SQL执行器
@@ -53,7 +54,7 @@ func (this *SQLExecutor) Run(showLog bool) error {
 	// prevent default configure loading
 	var globalConfig = dbs.GlobalConfig()
 	if globalConfig != nil && len(globalConfig.DBs) == 0 {
-		globalConfig.DBs = map[string]*dbs.DBConfig{"prod": this.dbConfig}
+		globalConfig.DBs = map[string]*dbs.DBConfig{Tea.Env: this.dbConfig}
 	}
 
 	defer func() {

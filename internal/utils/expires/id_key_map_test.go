@@ -3,9 +3,10 @@
 package expires
 
 import (
+	"testing"
+
 	"github.com/iwind/TeaGo/assert"
 	"github.com/iwind/TeaGo/logs"
-	"testing"
 )
 
 func TestNewIdKeyMap(t *testing.T) {

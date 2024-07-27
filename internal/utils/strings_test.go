@@ -3,9 +3,10 @@
 package utils_test
 
 import (
+	"testing"
+
 	"github.com/TeaOSLab/EdgeAPI/internal/utils"
 	"github.com/iwind/TeaGo/assert"
-	"testing"
 )
 
 func TestSplitStrings(t *testing.T) {

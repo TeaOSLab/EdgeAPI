@@ -1,11 +1,12 @@
-// Copyright 2024 GoEdge CDN goedge.cdn@gmail.com. All rights reserved. Official site: https://goedge.cn .
+// Copyright 2024 GoEdge CDN goedge.cdn@gmail.com. All rights reserved. Official site: https://goedge.cloud .
 
 package dnsclients
 
 import (
 	"encoding/json"
-	"github.com/iwind/TeaGo/maps"
 	"strings"
+
+	"github.com/iwind/TeaGo/maps"
 )
 
 // MaskString 对字符串进行掩码

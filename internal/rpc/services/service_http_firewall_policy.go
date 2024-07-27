@@ -3,6 +3,8 @@ package services
 import (
 	"context"
 	"encoding/json"
+	"net"
+
 	"github.com/TeaOSLab/EdgeAPI/internal/db/models"
 	"github.com/TeaOSLab/EdgeAPI/internal/errors"
 	"github.com/TeaOSLab/EdgeCommon/pkg/iplibrary"
@@ -10,7 +12,6 @@ import (
 	"github.com/TeaOSLab/EdgeCommon/pkg/serverconfigs/firewallconfigs"
 	"github.com/TeaOSLab/EdgeCommon/pkg/serverconfigs/ipconfigs"
 	"github.com/iwind/TeaGo/lists"
-	"net"
 )
 
 // HTTPFirewallPolicyService HTTP防火墙（WAF）相关服务

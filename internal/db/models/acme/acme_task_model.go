@@ -18,6 +18,8 @@ type ACMETask struct {
 	AutoRenew     uint8    `field:"autoRenew"`     // 是否自动更新
 	AuthType      string   `field:"authType"`      // 认证类型
 	AuthURL       string   `field:"authURL"`       // 认证URL
+	Async         bool     `field:"async"`         // 是否异步
+	Status        uint32   `field:"status"`        // 任务状态
 }
 
 type ACMETaskOperator struct {
@@ -35,6 +37,8 @@ type ACMETaskOperator struct {
 	AutoRenew     interface{} // 是否自动更新
 	AuthType      interface{} // 认证类型
 	AuthURL       interface{} // 认证URL
+	Async         interface{} //是否异步
+	Status        interface{} // 任务状态
 }
 
 func NewACMETaskOperator() *ACMETaskOperator {

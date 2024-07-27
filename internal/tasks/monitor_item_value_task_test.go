@@ -3,10 +3,11 @@
 package tasks_test
 
 import (
-	"github.com/TeaOSLab/EdgeAPI/internal/tasks"
-	"github.com/iwind/TeaGo/dbs"
 	"testing"
 	"time"
+
+	"github.com/TeaOSLab/EdgeAPI/internal/tasks"
+	"github.com/iwind/TeaGo/dbs"
 )
 
 func TestMonitorItemValueTask_Loop(t *testing.T) {

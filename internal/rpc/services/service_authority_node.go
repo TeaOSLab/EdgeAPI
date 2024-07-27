@@ -3,13 +3,14 @@ package services
 import (
 	"context"
 	"encoding/json"
+	"time"
+
 	"github.com/TeaOSLab/EdgeAPI/internal/db/models/authority"
 	"github.com/TeaOSLab/EdgeAPI/internal/errors"
 	rpcutils "github.com/TeaOSLab/EdgeAPI/internal/rpc/utils"
 	"github.com/TeaOSLab/EdgeCommon/pkg/nodeconfigs"
 	"github.com/TeaOSLab/EdgeCommon/pkg/rpc/pb"
 	"google.golang.org/grpc/metadata"
-	"time"
 )
 
 type AuthorityNodeService struct {

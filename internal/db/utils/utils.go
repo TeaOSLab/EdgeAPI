@@ -1,18 +1,19 @@
 package dbutils
 
 import (
-	executils "github.com/TeaOSLab/EdgeAPI/internal/utils/exec"
-	"github.com/iwind/TeaGo/Tea"
-	"github.com/iwind/TeaGo/dbs"
-	"github.com/iwind/TeaGo/lists"
-	"github.com/iwind/TeaGo/logs"
-	"github.com/iwind/TeaGo/types"
 	"net"
 	"os"
 	"os/exec"
 	"regexp"
 	"strings"
 	"time"
+
+	executils "github.com/TeaOSLab/EdgeAPI/internal/utils/exec"
+	"github.com/iwind/TeaGo/Tea"
+	"github.com/iwind/TeaGo/dbs"
+	"github.com/iwind/TeaGo/lists"
+	"github.com/iwind/TeaGo/logs"
+	"github.com/iwind/TeaGo/types"
 )
 
 // NewQuery 构造Query

@@ -3,13 +3,14 @@ package db
 import (
 	"database/sql"
 	"database/sql/driver"
+	"testing"
+	"time"
+
 	"github.com/TeaOSLab/EdgeAPI/internal/db/models"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/iwind/TeaGo/Tea"
 	_ "github.com/iwind/TeaGo/bootstrap"
 	"github.com/iwind/TeaGo/dbs"
-	"testing"
-	"time"
 )
 
 func TestDB_Env(t *testing.T) {

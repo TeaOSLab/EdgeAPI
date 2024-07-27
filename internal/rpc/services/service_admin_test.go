@@ -3,6 +3,9 @@ package services
 import (
 	"context"
 	"encoding/base64"
+	"testing"
+	"time"
+
 	teaconst "github.com/TeaOSLab/EdgeAPI/internal/const"
 	"github.com/TeaOSLab/EdgeAPI/internal/encrypt"
 	"github.com/TeaOSLab/EdgeCommon/pkg/rpc/pb"
@@ -10,8 +13,6 @@ import (
 	"github.com/iwind/TeaGo/maps"
 	stringutil "github.com/iwind/TeaGo/utils/string"
 	"google.golang.org/grpc/metadata"
-	"testing"
-	"time"
 )
 
 func TestAdminService_Login(t *testing.T) {

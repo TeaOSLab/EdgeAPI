@@ -3,6 +3,8 @@ package services
 import (
 	"context"
 	"encoding/json"
+	"net"
+
 	"github.com/TeaOSLab/EdgeAPI/internal/db/models"
 	"github.com/TeaOSLab/EdgeAPI/internal/db/models/dns"
 	"github.com/TeaOSLab/EdgeAPI/internal/db/models/dns/dnsutils"
@@ -18,7 +20,6 @@ import (
 	"github.com/iwind/TeaGo/dbs"
 	"github.com/iwind/TeaGo/lists"
 	"github.com/iwind/TeaGo/maps"
-	"net"
 )
 
 // DNSDomainService DNS域名相关服务

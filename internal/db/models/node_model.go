@@ -49,6 +49,7 @@ type Node struct {
 	IsBackupForGroup       bool     `field:"isBackupForGroup"`       // 是否为分组备用节点
 	BackupIPs              dbs.JSON `field:"backupIPs"`              // 备用IP
 	ActionStatus           dbs.JSON `field:"actionStatus"`           // 当前动作配置
+	BypassMobile           int32    `field:"bypassMobile"`           // 是否过移动
 }
 
 type NodeOperator struct {
@@ -97,6 +98,7 @@ type NodeOperator struct {
 	IsBackupForGroup       any // 是否为分组备用节点
 	BackupIPs              any // 备用IP
 	ActionStatus           any // 当前动作配置
+	BypassMobile           any // 是否过移动
 }
 
 func NewNodeOperator() *NodeOperator {

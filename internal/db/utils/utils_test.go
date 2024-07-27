@@ -3,9 +3,10 @@
 package dbutils_test
 
 import (
+	"testing"
+
 	dbutils "github.com/TeaOSLab/EdgeAPI/internal/db/utils"
 	"github.com/iwind/TeaGo/assert"
-	"testing"
 )
 
 func TestQuoteLike(t *testing.T) {

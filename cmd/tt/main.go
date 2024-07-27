@@ -4,13 +4,14 @@ import (
 	"bufio"
 	"bytes"
 	"fmt"
+	"os"
+	"path/filepath"
+	"time"
+
 	"github.com/iwind/TeaGo/Tea"
 	"github.com/iwind/TeaGo/cmd"
 	_ "github.com/iwind/TeaGo/dbs/commands"
 	"github.com/iwind/TeaGo/lists"
-	"os"
-	"path/filepath"
-	"time"
 )
 
 // TeaTool工具

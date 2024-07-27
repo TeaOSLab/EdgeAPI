@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+
 	"github.com/TeaOSLab/EdgeAPI/internal/acme"
 	"github.com/TeaOSLab/EdgeAPI/internal/db/models"
 	acmemodels "github.com/TeaOSLab/EdgeAPI/internal/db/models/acme"
@@ -239,7 +240,7 @@ func (this *ACMETaskService) CreateACMETask(ctx context.Context, req *pb.CreateA
 	}
 
 	var tx = this.NullTx()
-	taskId, err := acmemodels.SharedACMETaskDAO.CreateACMETask(tx, adminId, userId, req.AuthType, req.AcmeUserId, req.DnsProviderId, req.DnsDomain, req.Domains, req.AutoRenew, req.AuthURL)
+	taskId, err := acmemodels.SharedACMETaskDAO.CreateACMETask(tx, adminId, userId, req.AuthType, req.AcmeUserId, req.DnsProviderId, req.DnsDomain, req.Domains, req.AutoRenew, req.AuthURL, req.Async)
 	if err != nil {
 		return nil, err
 	}

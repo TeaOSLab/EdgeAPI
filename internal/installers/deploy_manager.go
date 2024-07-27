@@ -1,11 +1,12 @@
 package installers
 
 import (
+	"regexp"
+	"sync"
+
 	"github.com/iwind/TeaGo/Tea"
 	"github.com/iwind/TeaGo/files"
 	stringutil "github.com/iwind/TeaGo/utils/string"
-	"regexp"
-	"sync"
 )
 
 var SharedDeployManager = NewDeployManager()

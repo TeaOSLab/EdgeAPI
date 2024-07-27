@@ -3,8 +3,9 @@
 package utils
 
 import (
-	"github.com/iwind/TeaGo/assert"
 	"testing"
+
+	"github.com/iwind/TeaGo/assert"
 )
 
 func TestNewCacheMap(t *testing.T) {

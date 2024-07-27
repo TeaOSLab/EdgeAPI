@@ -1,4 +1,4 @@
-// Copyright 2022 GoEdge CDN goedge.cdn@gmail.com. All rights reserved. Official site: https://goedge.cn .
+// Copyright 2022 GoEdge CDN goedge.cdn@gmail.com. All rights reserved. Official site: https://goedge.cloud .
 
 package services
 
@@ -6,6 +6,11 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"os"
+	"strings"
+	"sync"
+	"time"
+
 	teaconst "github.com/TeaOSLab/EdgeAPI/internal/const"
 	"github.com/TeaOSLab/EdgeAPI/internal/db/models"
 	"github.com/TeaOSLab/EdgeAPI/internal/db/models/stats"
@@ -19,10 +24,6 @@ import (
 	"github.com/iwind/TeaGo/dbs"
 	"github.com/iwind/TeaGo/types"
 	timeutil "github.com/iwind/TeaGo/utils/time"
-	"os"
-	"strings"
-	"sync"
-	"time"
 )
 
 var serverBandwidthStatsMap = map[string]*pb.ServerBandwidthStat{} // server key => bandwidth
@@ -117,7 +118,7 @@ func init() {
 								// 分时统计
 								err = models.SharedUserPlanBandwidthStatDAO.UpdateUserPlanBandwidth(tx, stat.UserId, stat.UserPlanId, stat.NodeRegionId, stat.Day, stat.TimeAt, stat.Bytes, stat.TotalBytes, stat.CachedBytes, stat.AttackBytes, stat.CountRequests, stat.CountCachedRequests, stat.CountAttackRequests, stat.CountWebsocketConnections)
 								if err != nil {
-									remotelogs.Error("SharedUserPlanBandwidthStatDAO", "UpdateUserPlanBandwidth: " + err.Error())
+									remotelogs.Error("SharedUserPlanBandwidthStatDAO", "UpdateUserPlanBandwidth: "+err.Error())
 								}
 							}
 						}

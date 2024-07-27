@@ -1,13 +1,14 @@
-// Copyright 2024 GoEdge CDN goedge.cdn@gmail.com. All rights reserved. Official site: https://goedge.cn .
+// Copyright 2024 GoEdge CDN goedge.cdn@gmail.com. All rights reserved. Official site: https://goedge.cloud .
 
 package configs
 
 import (
 	"errors"
+	"os"
+
 	"github.com/iwind/TeaGo/Tea"
 	"github.com/iwind/TeaGo/dbs"
 	"gopkg.in/yaml.v3"
-	"os"
 )
 
 func LoadDBConfig() (*dbs.Config, error) {

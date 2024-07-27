@@ -1,6 +1,10 @@
 package models
 
 import (
+	"net"
+	"strings"
+	"time"
+
 	dbutils "github.com/TeaOSLab/EdgeAPI/internal/db/utils"
 	"github.com/TeaOSLab/EdgeAPI/internal/errors"
 	"github.com/TeaOSLab/EdgeAPI/internal/goman"
@@ -13,9 +17,6 @@ import (
 	"github.com/iwind/TeaGo/dbs"
 	"github.com/iwind/TeaGo/lists"
 	"github.com/iwind/TeaGo/types"
-	"net"
-	"strings"
-	"time"
 )
 
 const (

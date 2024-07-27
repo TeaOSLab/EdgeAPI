@@ -3,10 +3,11 @@
 package setup
 
 import (
+	"strings"
+
 	teaconst "github.com/TeaOSLab/EdgeAPI/internal/const"
 	"github.com/iwind/TeaGo/types"
 	stringutil "github.com/iwind/TeaGo/utils/string"
-	"strings"
 )
 
 // ComposeSQLVersion 组合SQL的版本号

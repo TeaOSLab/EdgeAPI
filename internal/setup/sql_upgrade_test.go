@@ -1,8 +1,9 @@
 package setup
 
 import (
-	"github.com/iwind/TeaGo/dbs"
 	"testing"
+
+	"github.com/iwind/TeaGo/dbs"
 )
 
 func TestUpgradeSQLData(t *testing.T) {

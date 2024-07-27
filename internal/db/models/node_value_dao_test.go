@@ -1,6 +1,9 @@
 package models_test
 
 import (
+	"testing"
+	"time"
+
 	"github.com/TeaOSLab/EdgeAPI/internal/db/models"
 	"github.com/TeaOSLab/EdgeCommon/pkg/nodeconfigs"
 	_ "github.com/go-sql-driver/mysql"
@@ -10,8 +13,6 @@ import (
 	"github.com/iwind/TeaGo/maps"
 	"github.com/iwind/TeaGo/rands"
 	"github.com/iwind/TeaGo/types"
-	"testing"
-	"time"
 )
 
 func TestNodeValueDAO_CreateValue(t *testing.T) {

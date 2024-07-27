@@ -3,6 +3,10 @@ package setup
 import (
 	"encoding/json"
 	"fmt"
+	"os"
+	"strconv"
+	"strings"
+
 	"github.com/TeaOSLab/EdgeAPI/internal/configs"
 	"github.com/TeaOSLab/EdgeAPI/internal/db/models"
 	"github.com/TeaOSLab/EdgeAPI/internal/errors"
@@ -10,9 +14,6 @@ import (
 	"github.com/iwind/TeaGo/Tea"
 	"github.com/iwind/TeaGo/cmd"
 	"github.com/iwind/TeaGo/types"
-	"os"
-	"strconv"
-	"strings"
 )
 
 type Setup struct {

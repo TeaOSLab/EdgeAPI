@@ -2,6 +2,7 @@ package nameservers
 
 import (
 	"encoding/json"
+
 	"github.com/iwind/TeaGo/types"
 )
 

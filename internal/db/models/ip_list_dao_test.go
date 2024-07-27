@@ -2,10 +2,11 @@ package models
 
 import (
 	"errors"
-	_ "github.com/go-sql-driver/mysql"
-	"github.com/iwind/TeaGo/dbs"
 	"runtime"
 	"testing"
+
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/iwind/TeaGo/dbs"
 )
 
 func TestIPListDAO_IncreaseVersion(t *testing.T) {

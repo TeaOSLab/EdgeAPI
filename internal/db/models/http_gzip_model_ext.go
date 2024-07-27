@@ -2,6 +2,7 @@ package models
 
 import (
 	"encoding/json"
+
 	"github.com/TeaOSLab/EdgeCommon/pkg/serverconfigs/shared"
 )
 

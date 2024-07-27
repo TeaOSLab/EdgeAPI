@@ -2,6 +2,9 @@ package setup
 
 import (
 	"encoding/json"
+	"strconv"
+	"strings"
+
 	"github.com/TeaOSLab/EdgeAPI/internal/acme"
 	"github.com/TeaOSLab/EdgeAPI/internal/db/models"
 	"github.com/TeaOSLab/EdgeAPI/internal/db/models/stats"
@@ -16,8 +19,6 @@ import (
 	"github.com/iwind/TeaGo/maps"
 	"github.com/iwind/TeaGo/rands"
 	"github.com/iwind/TeaGo/types"
-	"strconv"
-	"strings"
 )
 
 type upgradeVersion struct {

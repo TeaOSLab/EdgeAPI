@@ -76,10 +76,10 @@ function build() {
 	fi
 
 	# build sql
-	if [ $TAG = "plus" ]; then
-		echo "building sql ..."
-		"${ROOT}"/sql.sh
-	fi
+	# if [ $TAG = "plus" ]; then
+	# 	echo "building sql ..."
+	# 	"${ROOT}"/sql.sh
+	# fi
 
 	# copy files
 	echo "copying ..."
@@ -101,7 +101,7 @@ function build() {
 	architects=("amd64" "arm64")
 	for arch in "${architects[@]}"; do
 		# TODO support arm, mips ...
-		env GOOS=linux GOARCH="${arch}" go build -trimpath -tags $TAG --ldflags="-s -w" -o "$ROOT"/installers/edge-installer-helper-linux-"${arch}" "$ROOT"/../cmd/installer-helper/main.go
+		env GOOS=linux GOARCH="${arch}" CGO_ENABLED=0 go build -trimpath -tags $TAG --ldflags="-s -w" -o "$ROOT"/installers/edge-installer-helper-linux-"${arch}" "$ROOT"/../cmd/installer-helper/main.go
 	done
 
 	# building edge dns installer
@@ -110,12 +110,29 @@ function build() {
 		architects=("amd64" "arm64")
 		for arch in "${architects[@]}"; do
 			# TODO support arm, mips ...
-			env GOOS=linux GOARCH="${arch}" go build -trimpath -tags $TAG --ldflags="-s -w" -o "$ROOT"/installers/edge-installer-dns-helper-linux-"${arch}" "$ROOT"/../cmd/installer-dns-helper/main.go
+			env GOOS=linux GOARCH="${arch}" CGO_ENABLED=0 go build -trimpath -tags $TAG --ldflags="-s -w" -o "$ROOT"/installers/edge-installer-dns-helper-linux-"${arch}" "$ROOT"/../cmd/installer-dns-helper/main.go
 		done
 	fi
 
+	CC_PATH=""
+	CXX_PATH=""
+	if [[ "${OS}" == "linux" ]]; then
+		if [ "${ARCH}" == "amd64" ]; then
+			CC_PATH=$(command -v x86_64-linux-musl-gcc)
+			CXX_PATH=$(command -v x86_64-linux-musl-g++)
+		fi
+		if [ "${ARCH}" == "arm64" ]; then
+			CC_PATH=$(command -v aarch64-linux-musl-gcc)
+			CXX_PATH=$(command -v aarch64-linux-musl-g++)
+		fi
+	fi
 	# building api node
-	env GOOS="$OS" GOARCH="$ARCH" go build -trimpath -tags $TAG --ldflags="-s -w" -o "$DIST/bin/$NAME" "$ROOT"/../cmd/edge-api/main.go
+	if [ -f $CC_PATH ]; then
+		env CC=$CC_PATH CXX=$CXX_PATH CGO_ENABLED=1 GOOS="$OS" GOARCH="$ARCH" go build -trimpath -tags $TAG --ldflags="-linkmode external -extldflags -static -s -w" -o "$DIST/bin/$NAME" "$ROOT"/../cmd/edge-api/main.go
+	else
+		env GOOS="$OS" GOARCH="$ARCH" go build -trimpath -tags $TAG --ldflags="-s -w" -o "$DIST/bin/$NAME" "$ROOT"/../cmd/edge-api/main.go
+	fi
+
 	if [ ! -f "${DIST}/bin/${NAME}" ]; then
 		echo "build failed!"
 		exit

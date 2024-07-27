@@ -3,12 +3,13 @@ package models
 import (
 	"encoding/json"
 	"errors"
+	"time"
+
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/iwind/TeaGo/Tea"
 	"github.com/iwind/TeaGo/dbs"
 	"github.com/iwind/TeaGo/maps"
 	"github.com/iwind/TeaGo/types"
-	"time"
 )
 
 // TODO 定时清理过期的SESSION

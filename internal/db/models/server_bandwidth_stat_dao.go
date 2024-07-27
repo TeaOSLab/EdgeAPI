@@ -2,6 +2,12 @@ package models
 
 import (
 	"fmt"
+	"math"
+	"regexp"
+	"strings"
+	"sync"
+	"time"
+
 	"github.com/TeaOSLab/EdgeAPI/internal/errors"
 	"github.com/TeaOSLab/EdgeAPI/internal/goman"
 	"github.com/TeaOSLab/EdgeAPI/internal/remotelogs"
@@ -15,11 +21,6 @@ import (
 	"github.com/iwind/TeaGo/rands"
 	"github.com/iwind/TeaGo/types"
 	timeutil "github.com/iwind/TeaGo/utils/time"
-	"math"
-	"regexp"
-	"strings"
-	"sync"
-	"time"
 )
 
 type ServerBandwidthStatDAO dbs.DAO

@@ -2,6 +2,10 @@ package tasks
 
 import (
 	"encoding/json"
+	"net"
+	"strings"
+	"time"
+
 	"github.com/TeaOSLab/EdgeAPI/internal/db/models"
 	dnsmodels "github.com/TeaOSLab/EdgeAPI/internal/db/models/dns"
 	"github.com/TeaOSLab/EdgeAPI/internal/dnsclients"
@@ -12,9 +16,6 @@ import (
 	"github.com/TeaOSLab/EdgeCommon/pkg/nodeconfigs"
 	"github.com/iwind/TeaGo/dbs"
 	"github.com/iwind/TeaGo/lists"
-	"net"
-	"strings"
-	"time"
 )
 
 func init() {

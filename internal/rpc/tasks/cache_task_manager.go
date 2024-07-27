@@ -3,6 +3,9 @@
 package tasks
 
 import (
+	"sync"
+	"time"
+
 	"github.com/TeaOSLab/EdgeAPI/internal/db/models"
 	"github.com/TeaOSLab/EdgeAPI/internal/db/models/stats"
 	"github.com/TeaOSLab/EdgeAPI/internal/goman"
@@ -13,8 +16,6 @@ import (
 	"github.com/iwind/TeaGo/lists"
 	"github.com/iwind/TeaGo/types"
 	timeutil "github.com/iwind/TeaGo/utils/time"
-	"sync"
-	"time"
 )
 
 var SharedCacheTaskManager = NewCacheTaskManager()

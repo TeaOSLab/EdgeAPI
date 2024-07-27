@@ -1,8 +1,9 @@
 package ttlcache
 
 import (
-	"github.com/TeaOSLab/EdgeAPI/internal/utils"
 	"time"
+
+	"github.com/TeaOSLab/EdgeAPI/internal/utils"
 )
 
 var SharedCache = NewCache()

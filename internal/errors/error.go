@@ -2,10 +2,11 @@ package errors
 
 import (
 	"errors"
-	"github.com/iwind/TeaGo/Tea"
 	"path/filepath"
 	"runtime"
 	"strconv"
+
+	"github.com/iwind/TeaGo/Tea"
 )
 
 type errorObj struct {

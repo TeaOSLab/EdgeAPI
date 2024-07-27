@@ -2,6 +2,11 @@ package nodes
 
 import (
 	"encoding/json"
+	"os"
+	"runtime"
+	"strings"
+	"time"
+
 	teaconst "github.com/TeaOSLab/EdgeAPI/internal/const"
 	"github.com/TeaOSLab/EdgeAPI/internal/db/models"
 	"github.com/TeaOSLab/EdgeAPI/internal/events"
@@ -11,10 +16,6 @@ import (
 	"github.com/iwind/TeaGo/lists"
 	"github.com/shirou/gopsutil/v3/cpu"
 	"github.com/shirou/gopsutil/v3/disk"
-	"os"
-	"runtime"
-	"strings"
-	"time"
 )
 
 type NodeStatusExecutor struct {

@@ -3,6 +3,9 @@ package tasks
 import (
 	"bytes"
 	"encoding/json"
+	"strings"
+	"time"
+
 	"github.com/TeaOSLab/EdgeAPI/internal/db/models"
 	"github.com/TeaOSLab/EdgeAPI/internal/goman"
 	"github.com/TeaOSLab/EdgeAPI/internal/utils"
@@ -11,8 +14,6 @@ import (
 	"github.com/TeaOSLab/EdgeCommon/pkg/serverconfigs"
 	"github.com/iwind/TeaGo/maps"
 	"github.com/iwind/TeaGo/types"
-	"strings"
-	"time"
 )
 
 // HealthCheckClusterTask 单个集群的健康检查任务

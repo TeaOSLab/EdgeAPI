@@ -1,12 +1,13 @@
-// Copyright 2022 GoEdge CDN goedge.cdn@gmail.com. All rights reserved. Official site: https://goedge.cn .
+// Copyright 2022 GoEdge CDN goedge.cdn@gmail.com. All rights reserved. Official site: https://goedge.cloud .
 
 package dnsclients_test
 
 import (
+	"testing"
+
 	"github.com/TeaOSLab/EdgeAPI/internal/dnsclients"
 	"github.com/TeaOSLab/EdgeAPI/internal/dnsclients/dnstypes"
 	"github.com/iwind/TeaGo/dbs"
-	"testing"
 )
 
 func TestDomainRecordsCache_WriteDomainRecords(t *testing.T) {
@@ -22,7 +23,7 @@ func TestDomainRecordsCache_WriteDomainRecords(t *testing.T) {
 		},
 	})
 
-	//time.Sleep(30 * time.Second)
+	// time.Sleep(30 * time.Second)
 
 	{
 		t.Log(cache.QueryDomainRecord(1, "a", "hello", "A"))

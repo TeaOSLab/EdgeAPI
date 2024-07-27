@@ -2,15 +2,16 @@ package acme
 
 import (
 	"fmt"
+	"os"
+	"strings"
+	"sync"
+	"time"
+
 	"github.com/TeaOSLab/EdgeAPI/internal/dnsclients"
 	"github.com/TeaOSLab/EdgeAPI/internal/dnsclients/dnstypes"
 	"github.com/TeaOSLab/EdgeAPI/internal/errors"
 	"github.com/go-acme/lego/v4/challenge/dns01"
 	"github.com/iwind/TeaGo/lists"
-	"os"
-	"strings"
-	"sync"
-	"time"
 )
 
 type DNSProvider struct {

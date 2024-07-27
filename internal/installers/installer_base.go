@@ -3,17 +3,18 @@ package installers
 import (
 	"errors"
 	"fmt"
-	"github.com/TeaOSLab/EdgeCommon/pkg/configutils"
-	"github.com/TeaOSLab/EdgeCommon/pkg/nodeconfigs"
-	"github.com/iwind/TeaGo/Tea"
-	stringutil "github.com/iwind/TeaGo/utils/string"
-	"golang.org/x/crypto/ssh"
 	"net"
 	"path/filepath"
 	"regexp"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/TeaOSLab/EdgeCommon/pkg/configutils"
+	"github.com/TeaOSLab/EdgeCommon/pkg/nodeconfigs"
+	"github.com/iwind/TeaGo/Tea"
+	stringutil "github.com/iwind/TeaGo/utils/string"
+	"golang.org/x/crypto/ssh"
 )
 
 type BaseInstaller struct {
